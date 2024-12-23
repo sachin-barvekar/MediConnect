@@ -1,92 +1,92 @@
 export const ROUTE_PATH = {
   BASE: {
-    HOME: "/",
-    ABOUT: "/about",
-    LOGIN: "/login",
-    REGISTER: "/register",
-    FORGOT_PASSWORD: "/forgot-password",
+    HOME: '/',
+    ABOUT: '/about',
+    LOGIN: '/login',
+    REGISTER: '/register',
+    FORGOT_PASSWORD: '/forgot-password',
   },
   CUSTOMER: {
-    HOME: "/customer",
+    HOME: '/customer',
   },
   FARMER: {
-    HOME: "/farmer",
-    MARKET: "/market",
-    MY_BOOKING:"/my_bookings",
-    DATA:"/market/data",
-    INWARD:"/inward",
-    OUTWARD:"/outward",
-    SUBCRIPTION: "/subscription",
+    HOME: '/farmer',
+    MARKET: '/market',
+    MY_BOOKING: '/my_bookings',
+    DATA: '/market/data',
+    INWARD: '/inward',
+    OUTWARD: '/outward',
+    SUBCRIPTION: '/subscription',
   },
-  BOOKING:{
-    STALL:"/market/:id"
+  BOOKING: {
+    STALL: '/market/:id',
   },
-  ADMIN:{
-    HOME:"/admin"
+  ADMIN: {
+    HOME: '/admin',
   },
-  FARMERS_LIST:{
-    HOME:"/farmers-list"
+  FARMERS_LIST: {
+    HOME: '/farmers-list',
   },
-  CUSTOMER_LIST:{
-    HOME:"/customer-list"
+  CUSTOMER_LIST: {
+    HOME: '/customer-list',
   },
-};
+}
 
 export const API_PATH = {
   BASE: {
-    LOGIN: "/login",
-    REGISTER: "/register",
+    LOGIN: '/login',
+    REGISTER: '/register',
   },
   STATE: {
-    FETCH: "/api/bookings/states",
+    FETCH: '/api/bookings/states',
   },
   CITY: {
-    FETCH: "/api/cities",
+    FETCH: '/api/cities',
   },
   MARKET: {
-    FETCH_LIST: "/api/markets/markets",
-    FETCH_DETAIL: "api/markets/:id",
+    FETCH_LIST: '/api/markets/markets',
+    FETCH_DETAIL: 'api/markets/:id',
   },
   STALL: {
     // FETCH: "/api/stallStatus/stalls",
-    FETCH: "/api/stalls/availability",
-    BOOK:"/api/bookings/multiple-stalls",
+    FETCH: '/api/stalls/availability',
+    BOOK: '/api/bookings/multiple-stalls',
     // BOOK_BY_USER:"/bookedstalls",
-    BOOK_BY_USER:"/api/bookings/booked-stalls",
-    ADD: "/stall",
-    EDIT: "/stall",
-    DELETE: "/bookedstalls",
-    FETCH_LIST: "/stall",
-    FETCH_DETAIL: "/stall/:id",
+    BOOK_BY_USER: '/api/bookings/booked-stalls',
+    ADD: '/stall',
+    EDIT: '/stall',
+    DELETE: '/bookedstalls',
+    FETCH_LIST: '/stall',
+    FETCH_DETAIL: '/stall/:id',
   },
   INWARD: {
-    FETCH: "/inward",
-    ADD: "/inward",
-    EDIT: "/inward",
-    DELETE: "/inward",
+    FETCH: '/inward',
+    ADD: '/inward',
+    EDIT: '/inward',
+    DELETE: '/inward',
   },
   OUTWARD: {
-    FETCH: "/outward",
-    ADD: "/outward",
-    EDIT: "/outward",
-    DELETE: "/outward",
+    FETCH: '/outward',
+    ADD: '/outward',
+    EDIT: '/outward',
+    DELETE: '/outward',
   },
 
   BOOKING_STALL: {
-    FETCH_LIST: "/booking-stall",
-    FETCH_DETAIL: "/booking-stall/:id",
+    FETCH_LIST: '/booking-stall',
+    FETCH_DETAIL: '/booking-stall/:id',
   },
   USER_PROFILE: {
-    FETCH_PROFILE: "/user-profile",
-    UPDATE_PROFILE: "/update-profile",
+    FETCH_PROFILE: '/user-profile',
+    UPDATE_PROFILE: '/update-profile',
   },
-  FARMER:{
-    FETCH_LIST:"/farmer"
+  FARMER: {
+    FETCH_LIST: '/farmer',
   },
-  CUSTOMER:{
-    FETCH_LIST:"/users"
+  CUSTOMER: {
+    FETCH_LIST: '/users',
   },
-  CANCELLED_STALLS:{
-    FETCH_LIST:"/cancelled-stalls"
-  }
-};
+  CANCELLED_STALLS: {
+    FETCH_LIST: '/cancelled-stalls',
+  },
+}

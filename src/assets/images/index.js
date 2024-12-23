@@ -1,3 +1,3 @@
-import LOGINREGISTERBG from "./loginbg.png";
+import LOGINREGISTERBG from './loginbg.png'
 
-export { LOGINREGISTERBG };
+export { LOGINREGISTERBG }

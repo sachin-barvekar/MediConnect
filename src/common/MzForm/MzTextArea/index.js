@@ -1,8 +1,8 @@
-import React from "react";
-import { Controller } from "react-hook-form";
-import { classNames } from "primereact/utils";
-import { InputTextarea } from "primereact/inputtextarea";
-import { Message } from "primereact/message";
+import React from 'react'
+import { Controller } from 'react-hook-form'
+import { classNames } from 'primereact/utils'
+import { InputTextarea } from 'primereact/inputtextarea'
+import { Message } from 'primereact/message'
 
 const MzTextarea = ({
   control,
@@ -22,16 +22,16 @@ const MzTextarea = ({
 }) => {
   const getLabelClassName = () => {
     return classNames({
-      "p-error": isError,
+      'p-error': isError,
       labelClassName,
-    });
-  };
+    })
+  }
 
   return (
-    <div className="field" style={{ textAlign: "start" }}>
+    <div className='field' style={{ textAlign: 'start' }}>
       <label htmlFor={name} className={getLabelClassName()}>
         {label}
-        {rules?.required ? <span className="p-error">*</span> : null}
+        {rules?.required ? <span className='p-error'>*</span> : null}
       </label>
       <span className={wrapperClass}>
         <Controller
@@ -42,35 +42,35 @@ const MzTextarea = ({
             <InputTextarea
               id={field.name}
               name={field.name}
-              onChange={(e) => {
-                field.onChange(e);
-                onChange && onChange(e.target.value);
+              onChange={e => {
+                field.onChange(e)
+                onChange && onChange(e.target.value)
               }}
               disabled={disabled}
               placeholder={placeholder}
               value={field.value}
-              rows={rows} 
+              rows={rows}
               cols={cols}
-              className={classNames("p-inputtext w-full", {
-                "p-invalid": fieldState.invalid,
+              className={classNames('p-inputtext w-full', {
+                'p-invalid': fieldState.invalid,
               })}
-              style={inputStyle ? JSON.parse(inputStyle) : { width: "100%" }}
+              style={inputStyle ? JSON.parse(inputStyle) : { width: '100%' }}
             />
           )}
         />
       </span>
       {errorMsg && (
         <Message
-          className="mt-1 flex"
+          className='mt-1 flex'
           style={{
-            borderWidth: "0 0 0 2px",
+            borderWidth: '0 0 0 2px',
           }}
-          severity="error"
+          severity='error'
           content={errorMsg}
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default MzTextarea;
+export default MzTextarea

@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import { ProgressBar } from "primereact/progressbar";
-import LoginComponent from "../../components/login";
-import { init_login, login, logout } from "../../redux/action/auth/login";
-import { init_verification } from "../../redux/action/auth/smg91";
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+import { ProgressBar } from 'primereact/progressbar'
+import LoginComponent from '../../components/login'
+import { init_login, login, logout } from '../../redux/action/auth/login'
+import { init_verification } from '../../redux/action/auth/smg91'
 
 import {
   sendVerificationCode,
   verifyCode,
   reSendVerificationCode,
-} from "../../redux/action/auth/smg91";
-import { toast } from "react-toastify";
-const LoginScreen = (props) => {
+} from '../../redux/action/auth/smg91'
+import { toast } from 'react-toastify'
+const LoginScreen = props => {
   const {
     initLoginScreen,
     formFieldValueMap,
@@ -34,13 +34,13 @@ const LoginScreen = (props) => {
     isResendVerificationCodeError,
     init_login,
     init_verification,
-    sendVerificationCodeSuccess
-  } = props;
+    sendVerificationCodeSuccess,
+  } = props
 
   useEffect(() => {
-    initLoginScreen();
+    initLoginScreen()
     // eslint-disable-next-line
-  }, []);
+  }, [])
 
   const loginProps = {
     formFieldValueMap,
@@ -55,59 +55,61 @@ const LoginScreen = (props) => {
     isVerify,
     reSendVerificationCode,
     sendVerificationCodeSuccess,
-    isResendVerificationCodeSuccess
-  };
- 
-  if (isLoginError) {
-    const toastTitle = error ? error?.error : "Error while login";
-    toast.error(toastTitle);
-    init_login();
+    isResendVerificationCodeSuccess,
   }
-  if(isSendVerificationCodeError){
-    const toastTitle = error ? error?.error : "Send OTP Error";
-    toast.error(toastTitle);
+
+  if (isLoginError) {
+    const toastTitle = error ? error?.error : 'Error while login'
+    toast.error(toastTitle)
+    init_login()
+  }
+  if (isSendVerificationCodeError) {
+    const toastTitle = error ? error?.error : 'Send OTP Error'
+    toast.error(toastTitle)
     init_verification()
   }
   if (isResendVerificationCodeSuccess) {
-    toast.success("OTP Resend Successfully");
+    toast.success('OTP Resend Successfully')
     init_verification()
   }
   if (isResendVerificationCodeError) {
-    const toastTitle = error1 ? error?.error : "Resend OTP Error";
-    toast.error(toastTitle);
+    const toastTitle = error1 ? error?.error : 'Resend OTP Error'
+    toast.error(toastTitle)
     init_verification()
   }
   if (isVerifyCodeError) {
-    const toastTitle = error1 ? error1?.message?.message : "OTP Validating Error";
-    toast.error(toastTitle);
+    const toastTitle = error1
+      ? error1?.message?.message
+      : 'OTP Validating Error'
+    toast.error(toastTitle)
     init_verification()
   }
 
   const renderProgressBar = () => {
-    return <ProgressBar mode="indeterminate" style={{ height: "6px" }} />;
-  };
+    return <ProgressBar mode='indeterminate' style={{ height: '6px' }} />
+  }
 
   return (
     <div>
       {isLoading && renderProgressBar()}
       <LoginComponent loginProps={loginProps} />
     </div>
-  );
-};
+  )
+}
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = dispatch => {
   return {
     initLoginScreen: () => dispatch(init_login()),
-    login: (loginData) => dispatch(login(loginData)),
-    sendVerificationCode: (payload) => dispatch(sendVerificationCode(payload)),
-    verifyCode: (payload) => dispatch(verifyCode(payload)),
+    login: loginData => dispatch(login(loginData)),
+    sendVerificationCode: payload => dispatch(sendVerificationCode(payload)),
+    verifyCode: payload => dispatch(verifyCode(payload)),
     logout: () => dispatch(logout()),
-    reSendVerificationCode: (payload) =>
+    reSendVerificationCode: payload =>
       dispatch(reSendVerificationCode(payload)),
     init_login: () => dispatch(init_login()),
     init_verification: () => dispatch(init_verification()),
-  };
-};
+  }
+}
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -128,13 +130,13 @@ const mapStateToProps = (state, ownProps) => {
     isVerify: state.msg91Reducer.isVerify,
     isResendVerificationCodeError:
       state.msg91Reducer?.isResendVerificationCodeError,
-      isVerifyCodeError: state.msg91Reducer?.isVerifyCodeError,
-      error1: state.msg91Reducer?.error,
-  };
-};
+    isVerifyCodeError: state.msg91Reducer?.isVerifyCodeError,
+    error1: state.msg91Reducer?.error,
+  }
+}
 
-const selectFormFieldValueMap = (loginReducer) => {
-  return loginReducer.formFieldValueMap;
-};
+const selectFormFieldValueMap = loginReducer => {
+  return loginReducer.formFieldValueMap
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)

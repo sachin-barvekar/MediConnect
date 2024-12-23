@@ -9,13 +9,14 @@ import { useDispatch } from 'react-redux'
 import { logout } from '../../redux/action/auth/login'
 import { init_verification } from '../../redux/action/auth/smg91'
 import { toast } from 'react-toastify'
+import './index.css'
 
 const Header = ({ role, verified }) => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const [visible, setVisible] = useState(false)
-  const user = JSON.parse(localStorage.getItem("user"));
-  const userName = user?.firstname +" "+ user?.lastname??""
+  const user = JSON.parse(localStorage.getItem('user'))
+  const userName = user?.firstname + ' ' + user?.lastname ?? ''
   const handleNavigation = route => {
     navigate(route)
     setVisible(false)
@@ -33,7 +34,7 @@ const Header = ({ role, verified }) => {
       label: 'About Us',
       icon: 'pi pi-fw pi-info-circle',
       route: ROUTE_PATH.BASE.HOME,
-    }, 
+    },
     !verified && {
       label: 'Login',
       icon: 'pi pi-fw pi-user',
@@ -54,7 +55,7 @@ const Header = ({ role, verified }) => {
 
   const start = (
     <div className='m-2'>
-     <h3 className='text-white'>MediConnect</h3>
+      <h3 className='text-white logo'>MediConnect</h3>
     </div>
   )
 
@@ -64,7 +65,7 @@ const Header = ({ role, verified }) => {
         label={'Home'}
         icon='pi pi-home'
         text
-        className='text-white no-outline font-bold  rounded'
+        className='text-white no-outline font-bold rounded'
         onClick={() => navigate(ROUTE_PATH.BASE.HOME)}
       />
       <Button
@@ -74,7 +75,7 @@ const Header = ({ role, verified }) => {
         className='text-white no-outline font-bold rounded'
         onClick={() => navigate(ROUTE_PATH.BASE.HOME)}
       />
-       {!verified && (
+      {!verified && (
         <Button
           label={'Login'}
           icon='pi pi-user'
@@ -98,8 +99,11 @@ const Header = ({ role, verified }) => {
   )
   return (
     <div className='border-bottom-1 border-400'>
-      <div className='flex align-items-center justify-content-between p-1 block md:hidden' style={{backgroundColor:"#D49BA2"}}>
-     <h3 className='pl-2 text-white'>MediConnect</h3>
+      <div
+        className='flex align-items-center justify-content-between p-1 block md:hidden'
+        style={{ backgroundColor: '#D49BA2' }}
+      >
+        <h3 className='pl-2 text-white logo'>MediConnect</h3>
         <Button
           icon='pi pi-bars'
           className='p-button-text text-white'
@@ -115,11 +119,12 @@ const Header = ({ role, verified }) => {
         header={
           <div className='flex align-items-center justify-content-between p-1 block md:hidden'>
             <NavLink className='p-ripple no-underline'>
-              <span className='font-bold'>MediConnect</span>
+              <span className='font-bold logo'>MediConnect</span>
             </NavLink>
           </div>
         }
-        modal>
+        modal
+      >
         <div className='p-sidebar-content flex flex-column justify-content-between'>
           <div className='sidebar-menu'>
             {sidebarItems.map(
@@ -132,13 +137,15 @@ const Header = ({ role, verified }) => {
                       item.command
                         ? item.command
                         : () => handleNavigation(item.route)
-                    }>
+                    }
+                  >
                     <i
                       className={item.icon}
-                      style={{ fontSize: '1.5rem', marginRight: '1rem' }}></i>
+                      style={{ fontSize: '1.5rem', marginRight: '1rem' }}
+                    ></i>
                     <span className='ml-1'>{item.label}</span>
                   </div>
-                ),
+                )
             )}
           </div>
 
@@ -151,7 +158,7 @@ const Header = ({ role, verified }) => {
                   style={{ backgroundColor: '#28a745', color: '#ffffff' }}
                   shape='circle'
                 />
-                <span className='font-bold'>{userName}</span>
+                <span className='font-bold text-black'>{userName}</span>
               </NavLink>
             </div>
           </div>
@@ -159,7 +166,11 @@ const Header = ({ role, verified }) => {
       </Sidebar>
 
       <div className='hidden md:block'>
-        <Menubar start={start} end={end} style={{backgroundColor:"#D49BA2"}} />
+        <Menubar
+          start={start}
+          end={end}
+          style={{ backgroundColor: '#D49BA2' }}
+        />
       </div>
     </div>
   )

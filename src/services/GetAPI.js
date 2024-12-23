@@ -1,32 +1,32 @@
-const baseUrl = "";
+const baseUrl = ''
 function loadingShow(hidden) {
-  let loading = document.getElementById("loading");
-  loading.style.display = hidden;
+  let loading = document.getElementById('loading')
+  loading.style.display = hidden
 }
 
 export function getApi(type, token) {
   return fetch(baseUrl + type, {
     headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
       authorization: token,
     },
-    method: "GET",
+    method: 'GET',
   })
-    .then((response) => {
+    .then(response => {
       if (response.status === 401) {
-        loadingShow("none");
-        window.location.replace("/");
+        loadingShow('none')
+        window.location.replace('/')
       }
-      return response;
+      return response
     })
-    .then((responseJson) => {
-      loadingShow("none");
-      return responseJson.json();
+    .then(responseJson => {
+      loadingShow('none')
+      return responseJson.json()
     })
-    .catch((error) => {
-      throw error;
-    });
+    .catch(error => {
+      throw error
+    })
 }
 
 export function getApiDown(type, token) {
@@ -34,71 +34,71 @@ export function getApiDown(type, token) {
     headers: {
       authorization: token,
     },
-    method: "GET",
+    method: 'GET',
   })
-    .then((response) => {
+    .then(response => {
       if (response.status === 401) {
-        loadingShow("none");
-        window.location.replace("/");
+        loadingShow('none')
+        window.location.replace('/')
       }
-      return response;
+      return response
     })
-    .then((responseJson) => {
-      loadingShow("none");
-      return responseJson.json();
+    .then(responseJson => {
+      loadingShow('none')
+      return responseJson.json()
     })
-    .catch((error) => {
-      throw error;
-    });
+    .catch(error => {
+      throw error
+    })
 }
 
 export function getApiParam(type, param, token) {
   return fetch(baseUrl + type + param, {
     headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
       authorization: token,
     },
-    method: "GET",
+    method: 'GET',
   })
-    .then((response) => {
+    .then(response => {
       if (response.status === 401) {
-        loadingShow("none");
-        window.location.replace("/");
+        loadingShow('none')
+        window.location.replace('/')
       }
-      return response;
+      return response
     })
-    .then((responseJson) => {
-      loadingShow("none");
-      return responseJson.json();
+    .then(responseJson => {
+      loadingShow('none')
+      return responseJson.json()
     })
-    .catch((error) => {
-      throw error;
-    });
+    .catch(error => {
+      throw error
+    })
 }
 
 export function getApiBody(type, userInput, token) {
   return fetch(baseUrl + type, {
     headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
       authorization: token,
     },
-    method: "GET",
+    method: 'GET',
     body: JSON.stringify(userInput),
   })
-    .then((response) => {
+    .then(response => {
       if (response.status === 401) {
-        loadingShow("none");
-        window.location.replace("/");
+        loadingShow('none')
+        window.location.replace('/')
       }
-      return response;
+      return response
     })
-    .then((responseJson) => {
-      loadingShow("none");
-      return responseJson.json();
+    .then(responseJson => {
+      loadingShow('none')
+      return responseJson.json()
     })
-    .catch((error) => {
-      throw error;
-    });
+    .catch(error => {
+      throw error
+    })
 }

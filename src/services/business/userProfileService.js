@@ -1,32 +1,32 @@
-import { API_PATH } from "../../constant/urlConstant";
-import { postApi } from "../PostAPI";
+import { API_PATH } from '../../constant/urlConstant'
+import { postApi } from '../PostAPI'
 
-export const fetchUserProfile = async (payload) => {
-  const url = `${API_PATH.USER_PROFILE.FETCH_PROFILE}`;
-  const token = "";
+export const fetchUserProfile = async payload => {
+  const url = `${API_PATH.USER_PROFILE.FETCH_PROFILE}`
+  const token = ''
   try {
-    let result = await postApi(url, payload, token);
+    let result = await postApi(url, payload, token)
     if (result?.error) {
-      throw new APIError(result);
+      throw new APIError(result)
     }
-    return result;
+    return result
   } catch (error) {
-    console.error(error);
-    return handleAPIError(error);
+    console.error(error)
+    return handleAPIError(error)
   }
-};
+}
 
-export const updateProfile = async (payload) => {
-  const url = `${API_PATH.USER_PROFILE.UPDATE_PROFILE}`;
-  const token = "";
+export const updateProfile = async payload => {
+  const url = `${API_PATH.USER_PROFILE.UPDATE_PROFILE}`
+  const token = ''
   try {
-    let result = await postApi(url, payload, token);
+    let result = await postApi(url, payload, token)
     if (result?.error) {
-      throw new APIError(result);
+      throw new APIError(result)
     }
-    return result;
+    return result
   } catch (error) {
-    console.error(error);
-    return handleAPIError(error);
+    console.error(error)
+    return handleAPIError(error)
   }
-};
+}

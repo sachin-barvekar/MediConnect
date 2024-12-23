@@ -1,60 +1,56 @@
-import {
-  INIT_REGISTRATION,
-  REGISTER,
-} from "../../../constant/actionTypes/auth";
+import { INIT_REGISTRATION, REGISTER } from '../../../constant/actionTypes/auth'
 
 const formFieldValueMap = {
-  username: "",
-  password: "",
-};
+  username: '',
+  password: '',
+}
 
 const initialState = {
   isRegistered: false,
   isRegistrationVerify: false,
   formFieldValueMap,
-  error: "",
+  error: '',
   isLoading: false,
   isPageLevelError: false,
   isLoadingPage: false,
   isRegisterSuccess: false,
   isRegisterError: false,
-};
+}
 
 const registerReducer = (state = initialState, action) => {
   switch (action.type) {
     case INIT_REGISTRATION:
       return {
         ...state,
-        isRegisterError:false,
+        isRegisterError: false,
         isPageLevelError: false,
         isLoadingPage: false,
         isRegisterSuccess: false,
-        isRegisterError: false,
         isRegistered: false,
         isRegistrationVerify: false,
-      };
+      }
     case REGISTER.START:
       return {
         ...state,
-        isLoading:true
-      };
+        isLoading: true,
+      }
     case REGISTER.SUCCESS:
       return {
         ...state,
         isRegistered: true,
-        isLoading:false
-      };
+        isLoading: false,
+      }
     case REGISTER.ERROR:
       return {
         ...state,
         isRegisterError: true,
         error: action?.payload,
-        isLoading:false
-      };
+        isLoading: false,
+      }
 
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default registerReducer;
+export default registerReducer

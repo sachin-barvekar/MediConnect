@@ -1,9 +1,9 @@
-import React from "react";
-import DropDown from "../index";
-import { classNames } from "primereact/utils";
-import { PropTypes } from "prop-types";
+import React from 'react'
+import DropDown from '../index'
+import { classNames } from 'primereact/utils'
+import { PropTypes } from 'prop-types'
 
-const MzDropDown = (props) => {
+const MzDropDown = props => {
   const {
     control,
     name,
@@ -23,20 +23,20 @@ const MzDropDown = (props) => {
     isError,
     id,
     wrapperClass,
-  } = props;
+  } = props
 
   const getLabelClassName = () => {
     return classNames({
-      "p-error": isError,
+      'p-error': isError,
       labelClassName,
-    });
-  };
+    })
+  }
 
   return (
-    <div className="field" style={{ textAlign: "start" }}>
+    <div className='field' style={{ textAlign: 'start' }}>
       <label htmlFor={name} className={getLabelClassName()}>
         {label}
-        {rules?.required ? <span className="p-error">*</span> : null}
+        {rules?.required ? <span className='p-error'>*</span> : null}
       </label>
       <span className={wrapperClass}>
         <DropDown
@@ -57,22 +57,22 @@ const MzDropDown = (props) => {
       </span>
       {errorMsg}
     </div>
-  );
-};
+  )
+}
 
 MzDropDown.defaultProps = {
-  labelClassName: "",
-  wrapperClass: "",
-  inputStyle: "",
+  labelClassName: '',
+  wrapperClass: '',
+  inputStyle: '',
   filter: false,
-  optionLabel: "label",
-  optionValue: "value",
-};
+  optionLabel: 'label',
+  optionValue: 'value',
+}
 
 MzDropDown.protoTypes = {
   labelClassName: PropTypes.string,
   filter: PropTypes.bool,
   optionLabel: PropTypes.string,
-};
+}
 
-export default MzDropDown;
+export default MzDropDown

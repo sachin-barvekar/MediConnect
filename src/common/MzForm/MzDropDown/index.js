@@ -1,9 +1,9 @@
-import React from "react";
-import { Controller } from "react-hook-form";
-import { Dropdown } from "primereact/dropdown";
-import { classNames } from "primereact/utils";
+import React from 'react'
+import { Controller } from 'react-hook-form'
+import { Dropdown } from 'primereact/dropdown'
+import { classNames } from 'primereact/utils'
 
-const DropDown = (props) => {
+const DropDown = props => {
   const {
     control,
     name,
@@ -17,7 +17,7 @@ const DropDown = (props) => {
     disabled,
     placeholder,
     inputStyle,
-  } = props;
+  } = props
 
   return (
     <Controller
@@ -27,7 +27,7 @@ const DropDown = (props) => {
       render={({ field, fieldState }) => (
         <Dropdown
           disabled={disabled}
-          style={inputStyle ? JSON.parse(inputStyle) : { width: "100%" }}
+          style={inputStyle ? JSON.parse(inputStyle) : { width: '100%' }}
           placeholder={placeholder}
           filter={shouldFilter}
           filterBy={filterBy || optionLabel}
@@ -37,25 +37,25 @@ const DropDown = (props) => {
           optionLabel={optionLabel}
           editable={true}
           optionValue={optionValue}
-          onChange={(e) => {
+          onChange={e => {
             if (onChange) {
-              onChange(e);
+              onChange(e)
             }
-            field.onChange(e);
+            field.onChange(e)
           }}
           className={classNames({
-            "p-invalid": fieldState.invalid,
+            'p-invalid': fieldState.invalid,
           })}
         />
       )}
     />
-  );
-};
+  )
+}
 DropDown.defaultProps = {
-  optionLabel: "label",
-  optionValue: "value",
+  optionLabel: 'label',
+  optionValue: 'value',
   shouldFilter: false,
-  inputStyle: "",
-};
+  inputStyle: '',
+}
 
-export default DropDown;
+export default DropDown

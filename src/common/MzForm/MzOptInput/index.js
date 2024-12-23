@@ -1,8 +1,8 @@
-import React from 'react';
-import { Controller } from 'react-hook-form';
-import { classNames } from 'primereact/utils';
-import { InputOtp } from 'primereact/inputotp';
-import { Message } from 'primereact/message';
+import React from 'react'
+import { Controller } from 'react-hook-form'
+import { classNames } from 'primereact/utils'
+import { InputOtp } from 'primereact/inputotp'
+import { Message } from 'primereact/message'
 
 const MzOtpInput = ({
   control,
@@ -16,20 +16,20 @@ const MzOtpInput = ({
   wrapperClass,
   placeholder,
   length,
-  integerOnly
+  integerOnly,
 }) => {
   const getLabelClassName = () => {
     return classNames({
       'p-error': isError,
       [labelClassName]: labelClassName,
-    });
-  };
+    })
+  }
 
   return (
-    <div className="field" style={{ textAlign: 'start' }}>
+    <div className='field' style={{ textAlign: 'start' }}>
       <label htmlFor={name} className={getLabelClassName()}>
         {label}
-        {rules?.required && <span className="p-error">*</span>}
+        {rules?.required && <span className='p-error'>*</span>}
       </label>
       <span className={wrapperClass}>
         <Controller
@@ -42,7 +42,7 @@ const MzOtpInput = ({
               name={name}
               value={field.value ?? ''}
               length={length}
-              onChange={(e) => field.onChange(e.value)}
+              onChange={e => field.onChange(e.value)}
               onBlur={field.onBlur}
               disabled={disabled}
               placeholder={placeholder}
@@ -55,16 +55,16 @@ const MzOtpInput = ({
       </span>
       {errorMsg && (
         <Message
-          className="mt-1 flex"
+          className='mt-1 flex'
           style={{
             borderWidth: '0 0 0 2px',
           }}
-          severity="error"
+          severity='error'
           content={errorMsg}
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default MzOtpInput;
+export default MzOtpInput

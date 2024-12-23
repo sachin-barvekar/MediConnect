@@ -1,8 +1,8 @@
-import React from "react";
-import { Controller } from "react-hook-form";
-import { classNames } from "primereact/utils";
-import { InputText } from "primereact/inputtext";
-import { Message } from "primereact/message";
+import React from 'react'
+import { Controller } from 'react-hook-form'
+import { classNames } from 'primereact/utils'
+import { InputText } from 'primereact/inputtext'
+import { Message } from 'primereact/message'
 
 const MzInputGroup = ({
   control,
@@ -18,30 +18,30 @@ const MzInputGroup = ({
   wrapperClass,
   placeholder,
   inputStyle,
-  addonIcon, // New prop for icon class name
+  addonIcon
 }) => {
   const getLabelClassName = () => {
     return classNames({
-      "p-error": isError,
+      'p-error': isError,
       [labelClassName]: labelClassName,
-    });
-  };
+    })
+  }
 
   return (
-    <div className="field" style={{ textAlign: "start" }}>
+    <div className='field' style={{ textAlign: 'start' }}>
       <label htmlFor={name} className={getLabelClassName()}>
         {label}
-        {rules?.required && <span className="p-error">*</span>}
+        {rules?.required && <span className='p-error'>*</span>}
       </label>
-      <span className={classNames("p-inputgroup", wrapperClass)}>
+      <span className={classNames('p-inputgroup', wrapperClass)}>
         <Controller
           name={name}
           control={control}
           rules={rules}
           render={({ field, fieldState }) => (
             <React.Fragment>
-                  {addonIcon && (
-                <span className="p-inputgroup-addon">
+              {addonIcon && (
+                <span className='p-inputgroup-addon'>
                   <i className={addonIcon}></i>
                 </span>
               )}
@@ -54,27 +54,26 @@ const MzInputGroup = ({
                 placeholder={placeholder}
                 {...field}
                 className={classNames({
-                  "p-invalid": fieldState.invalid,
+                  'p-invalid': fieldState.invalid,
                 })}
-                style={inputStyle ? JSON.parse(inputStyle) : { width: "100%" }}
+                style={inputStyle ? JSON.parse(inputStyle) : { width: '100%' }}
               />
-            
             </React.Fragment>
           )}
         />
       </span>
       {errorMsg && (
         <Message
-          className="mt-1 flex"
+          className='mt-1 flex'
           style={{
-            borderWidth: "0 0 0 2px",
+            borderWidth: '0 0 0 2px',
           }}
-          severity="error"
+          severity='error'
           content={errorMsg}
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default MzInputGroup;
+export default MzInputGroup

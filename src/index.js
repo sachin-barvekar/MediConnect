@@ -9,7 +9,6 @@ import "primeflex/primeflex.css"
 import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import store from './redux/store';
-import './i18n';
 
 import Modal from "react-modal";
 

@@ -1,1 +1,1 @@
-export const SET_IS_FORM_DIRTY = "SET_IS_FORM_DIRTY";
+export const SET_IS_FORM_DIRTY = 'SET_IS_FORM_DIRTY'

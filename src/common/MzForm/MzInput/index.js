@@ -1,8 +1,8 @@
-import React from "react";
-import { Controller } from "react-hook-form";
-import { classNames } from "primereact/utils";
-import { InputText } from "primereact/inputtext";
-import { Message } from "primereact/message";
+import React from 'react'
+import { Controller } from 'react-hook-form'
+import { classNames } from 'primereact/utils'
+import { InputText } from 'primereact/inputtext'
+import { Message } from 'primereact/message'
 
 const MzInput = ({
   control,
@@ -21,17 +21,17 @@ const MzInput = ({
 }) => {
   const getLabelClassName = () => {
     return classNames({
-      "p-error": isError,
+      'p-error': isError,
       labelClassName,
-    });
-  };
+    })
+  }
 
   return (
-    <div className="field" style={{textAlign:"start"}}>
-       <label htmlFor={name} className={getLabelClassName()}>
-          {label}
-          {rules?.required ? <span className="p-error">*</span> : null}
-        </label>
+    <div className='field' style={{ textAlign: 'start' }}>
+      <label htmlFor={name} className={getLabelClassName()}>
+        {label}
+        {rules?.required ? <span className='p-error'>*</span> : null}
+      </label>
       <span className={wrapperClass}>
         <Controller
           name={name}
@@ -45,31 +45,28 @@ const MzInput = ({
               onChange={onChange}
               disabled={disabled}
               placeholder={placeholder}
-              
               {...field}
               className={classNames({
-                "p-invalid": fieldState.invalid,
+                'p-invalid': fieldState.invalid,
               })}
-              style={inputStyle ? JSON.parse(inputStyle) : { width: "100%" }}
+              style={inputStyle ? JSON.parse(inputStyle) : { width: '100%' }}
             />
           )}
         />
-
-       
       </span>
       {errorMsg && (
         <Message
-          className="mt-1 flex"
+          className='mt-1 flex'
           style={{
-            borderWidth: "0 0 0 2px",
+            borderWidth: '0 0 0 2px',
           }}
-          severity="error"
+          severity='error'
           content={errorMsg}
         />
       )}
     </div>
-  );
-};
+  )
+}
 
 // MzInput.defaultProps = {
 //   labelClassName: "",
@@ -79,4 +76,4 @@ const MzInput = ({
 //   type: "text",
 // };
 
-export default MzInput;
+export default MzInput

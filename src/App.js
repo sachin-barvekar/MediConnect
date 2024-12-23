@@ -1,9 +1,9 @@
-import React from "react";
-import "./App.css";
-import { BrowserRouter } from "react-router-dom";
-import Routing from "./routing";
-import "./assets/fonts/fontStyle.css"
-import { ToastContainer } from 'react-toastify';
+import React from 'react'
+import './App.css'
+import { BrowserRouter } from 'react-router-dom'
+import Routing from './routing'
+import './assets/fonts/fontStyle.css'
+import { ToastContainer } from 'react-toastify'
 
 const App = () => {
   return (
@@ -11,7 +11,7 @@ const App = () => {
       <Routing />
       <ToastContainer />
     </BrowserRouter>
-  );
-};
+  )
+}
 
-export default App;
+export default App

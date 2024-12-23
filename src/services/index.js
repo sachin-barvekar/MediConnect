@@ -1,1 +1,1 @@
-export * as authService from "./business/authService"
+export * as authService from './business/authService'

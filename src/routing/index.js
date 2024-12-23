@@ -8,7 +8,6 @@ import RegisterScreen from '../containers/registerScreen'
 import { useSelector } from 'react-redux'
 import { USER_ROLE } from '../constant/role/index'
 
-
 import { isVerify, userRole } from '../redux/selectors/auth/index'
 
 const Routing = () => {

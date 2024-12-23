@@ -1,22 +1,20 @@
-import React from "react";
-import { Controller } from "react-hook-form";
-import { Calendar } from "primereact/calendar";
-import { classNames } from "primereact/utils";
-import { Message } from "primereact/message";
+import React from 'react'
+import { Controller } from 'react-hook-form'
+import { Calendar } from 'primereact/calendar'
+import { classNames } from 'primereact/utils'
+import { Message } from 'primereact/message'
 
-const DATE_TIME_MASK = "99/99/9999 99:99";
-const DATE_MASK = "99/99/9999";
+const DATE_TIME_MASK = '99/99/9999 99:99'
+const DATE_MASK = '99/99/9999'
 
-const MzCalendar = (props) => {
+const MzCalendar = props => {
   const {
     name,
     control,
     rules,
     label,
     wrapperClass,
-    maxDate,
     isError,
-    showButtonBar,
     showTime,
     showSeconds,
     timeOnly,
@@ -27,22 +25,19 @@ const MzCalendar = (props) => {
     errorMsg,
     minDate,
     disabledDays,
-    disabledDates
-  } = props;
+  } = props
 
   const getLabelClassName = () => {
     return classNames({
-      "p-error": isError,
-    });
-  };
-
-
+      'p-error': isError,
+    })
+  }
 
   return (
-    <div className="field" style={{ textAlign: "start" }}>
+    <div className='field' style={{ textAlign: 'start' }}>
       <label htmlFor={name} className={getLabelClassName()}>
         {label}
-        {rules?.required ? <span className="p-error">*</span> : null}
+        {rules?.required ? <span className='p-error'>*</span> : null}
       </label>
       <div className={wrapperClass}>
         <Controller
@@ -54,45 +49,42 @@ const MzCalendar = (props) => {
               <Calendar
                 {...field}
                 minDate={minDate}
-                // maxDate={maxDate}
                 disabledDays={disabledDays}
-                // disabledDates={(date) => isDateDisabled(date)}
                 timeOnly={timeOnly}
                 hideOnDateTimeSelect={hideOnDateTimeSelect}
                 showTime={showTime}
                 showSeconds={showSeconds}
                 id={field.name}
                 value={field.value}
-                onChange={(e) => {
+                onChange={e => {
                   if (onDateChange) {
-                    onDateChange(e);
+                    onDateChange(e)
                   }
                   if (e.value !== null) {
-                    field.onChange(e.value);
+                    field.onChange(e.value)
                   }
                 }}
                 dateFormat={dateFormat}
                 mask={showTime ? DATE_TIME_MASK : DATE_MASK}
                 showIcon={true}
-                // showButtonBar={showButtonBar}
                 hourFormat={hourFormat}
               />
-            );
+            )
           }}
         />
       </div>
       {errorMsg && (
         <Message
-          className="mt-1 flex"
+          className='mt-1 flex'
           style={{
-            borderWidth: "0 0 0 2px",
+            borderWidth: '0 0 0 2px',
           }}
-          severity="error"
+          severity='error'
           content={errorMsg}
         />
       )}
     </div>
-  );
-};
+  )
+}
 
-export default MzCalendar;
+export default MzCalendar

@@ -17,3 +17,7 @@
 .p-sidebar {
     max-width: 16rem !important;
 }
+.logo{
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
