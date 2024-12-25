@@ -103,7 +103,7 @@ const Header = ({ role, verified }) => {
         className='flex align-items-center justify-content-between p-1 block md:hidden'
         style={{ backgroundColor: '#D49BA2' }}
       >
-        <h3 className='pl-2 text-white logo'>MediConnect</h3>
+        <h6 className='pl-2 text-white logo'>MediConnect</h6>
         <Button
           icon='pi pi-bars'
           className='p-button-text text-white'
@@ -119,7 +119,7 @@ const Header = ({ role, verified }) => {
         header={
           <div className='flex align-items-center justify-content-between p-1 block md:hidden'>
             <NavLink className='p-ripple no-underline'>
-              <span className='font-bold logo'>MediConnect</span>
+              <span className='font-bold text-black logo'>MediConnect</span>
             </NavLink>
           </div>
         }
@@ -148,20 +148,21 @@ const Header = ({ role, verified }) => {
                 )
             )}
           </div>
-
-          <div className='p-sidebar-footer '>
-            <hr className='mb-3' />
-            <div className='sidebar-item mt-3'>
-              <NavLink className='flex align-items-center no-underline'>
-                <Avatar
-                  icon='pi pi-user'
-                  style={{ backgroundColor: '#28a745', color: '#ffffff' }}
-                  shape='circle'
-                />
-                <span className='font-bold text-black'>{userName}</span>
-              </NavLink>
+          {verified && (
+            <div className='p-sidebar-footer '>
+              <hr className='mb-3' />
+              <div className='sidebar-item mt-3'>
+                <NavLink className='flex align-items-center no-underline'>
+                  <Avatar
+                    icon='pi pi-user'
+                    style={{ backgroundColor: '#28a745', color: '#ffffff' }}
+                    shape='circle'
+                  />
+                  <span className='font-bold text-black'>{userName}</span>
+                </NavLink>
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </Sidebar>
 
