@@ -81,30 +81,3 @@ export const login = async payload => {
     return handleAPIError(error?.response?.data?.message)
   }
 }
-
-export const register = async payload => {
-  const url = `${baseUrl}/auth/signup`
-  try {
-    const result = await axios.post(url, {
-      ...payload,
-    })
-    if (result.status !== 200) {
-      return handleAPIError(result?.data?.detail ?? '')
-    }
-    return result?.data
-  } catch (error) {
-    console.error(error)
-    return handleAPIError(error?.response?.data)
-  }
-}
-
-export const postLogout = async () => {
-  try {
-    localStorage.clear()
-    let result = true
-    return result
-  } catch (error) {
-    console.error(error)
-    return handleAPIError(error)
-  }
-}
