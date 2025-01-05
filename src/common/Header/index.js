@@ -5,13 +5,11 @@ import { ROUTE_PATH } from '../../constant/urlConstant'
 import { Sidebar } from 'primereact/sidebar'
 import { Avatar } from 'primereact/avatar'
 import { Button } from 'primereact/button'
-import { useDispatch } from 'react-redux'
 import './index.css'
 
 const Header = () => {
   const navigate = useNavigate()
-  const dispatch = useDispatch()
-  const role = localStorage.getItem('role')
+  // const role = localStorage.getItem('role')
   const verified = localStorage.getItem('isLoggedIn')
   const [visible, setVisible] = useState(false)
   const user = JSON.parse(localStorage.getItem('user'))
