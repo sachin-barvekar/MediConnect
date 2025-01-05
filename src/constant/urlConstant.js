@@ -1,7 +1,7 @@
 export const ROUTE_PATH = {
   BASE: {
     HOME: '/',
-    ABOUT: '/about',
+    NEARBYHOSPITAL: '/nearby-hospital',
     LOGIN: '/login',
     REGISTER: '/register',
     FORGOT_PASSWORD: '/forgot-password',

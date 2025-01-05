@@ -6,34 +6,32 @@ import { Sidebar } from 'primereact/sidebar'
 import { Avatar } from 'primereact/avatar'
 import { Button } from 'primereact/button'
 import { useDispatch } from 'react-redux'
-import { logout } from '../../redux/action/auth/login'
-import { init_verification } from '../../redux/action/auth/smg91'
-import { toast } from 'react-toastify'
 import './index.css'
 
-const Header = ({ role, verified }) => {
+const Header = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const role = localStorage.getItem('role')
+  const verified = localStorage.getItem('isLoggedIn')
   const [visible, setVisible] = useState(false)
   const user = JSON.parse(localStorage.getItem('user'))
-  const userName = user?.firstname + ' ' + user?.lastname ?? ''
+  const userName = user?.displayName ?? ' '
   const handleNavigation = route => {
     navigate(route)
     setVisible(false)
   }
 
-  const handleLogout = () => {
-    dispatch(logout())
-    dispatch(init_verification())
-    navigate(ROUTE_PATH.BASE.HOME)
-    toast.success('Logout Successfully')
-  }
+  // const handleLogout = () => {
+  //   dispatch(logout())
+  //   navigate(ROUTE_PATH.BASE.HOME)
+  //   toast.success('Logout Successfully')
+  // }
   const sidebarItems = [
     { label: 'Home', icon: 'pi pi-fw pi-home', route: ROUTE_PATH.BASE.HOME },
     {
-      label: 'About Us',
+      label: 'Nearby Hospitals',
       icon: 'pi pi-fw pi-info-circle',
-      route: ROUTE_PATH.BASE.HOME,
+      route: ROUTE_PATH.BASE.NEARBYHOSPITAL,
     },
     !verified && {
       label: 'Login',
@@ -49,7 +47,7 @@ const Header = ({ role, verified }) => {
     verified && {
       label: 'Logout',
       icon: 'pi pi-fw pi-power-off p-error',
-      command: handleLogout,
+      // command: handleLogout,
     },
   ].filter(Boolean)
 
@@ -69,11 +67,11 @@ const Header = ({ role, verified }) => {
         onClick={() => navigate(ROUTE_PATH.BASE.HOME)}
       />
       <Button
-        label={'About Us'}
+        label={'Nearby Hospitals'}
         icon='pi pi-info-circle'
         text
         className='text-white no-outline font-bold rounded'
-        onClick={() => navigate(ROUTE_PATH.BASE.HOME)}
+        onClick={() => navigate(ROUTE_PATH.BASE.NEARBYHOSPITAL)}
       />
       {!verified && (
         <Button
@@ -91,7 +89,7 @@ const Header = ({ role, verified }) => {
             icon='pi pi-power-off'
             text
             className='text-white no-outline font-bold  rounded'
-            onClick={handleLogout}
+            // onClick={handleLogout}
           />
         </>
       )}
@@ -99,10 +97,7 @@ const Header = ({ role, verified }) => {
   )
   return (
     <div className='border-bottom-1 border-400'>
-      <div
-        className='flex align-items-center justify-content-between p-1 block md:hidden'
-        style={{ backgroundColor: '#D49BA2' }}
-      >
+      <div className='flex align-items-center justify-content-between p-1 block md:hidden bg-primary'>
         <h6 className='pl-2 text-white logo'>MediConnect</h6>
         <Button
           icon='pi pi-bars'
@@ -155,10 +150,13 @@ const Header = ({ role, verified }) => {
                 <NavLink className='flex align-items-center no-underline'>
                   <Avatar
                     icon='pi pi-user'
-                    style={{ backgroundColor: '#28a745', color: '#ffffff' }}
+                    style={{
+                      backgroundColor: 'var(--primary-color)',
+                      color: '#ffffff',
+                    }}
                     shape='circle'
                   />
-                  <span className='font-bold text-black'>{userName}</span>
+                  <span className='font-bold ml-2 text-black'>{userName}</span>
                 </NavLink>
               </div>
             </div>
@@ -170,7 +168,7 @@ const Header = ({ role, verified }) => {
         <Menubar
           start={start}
           end={end}
-          style={{ backgroundColor: '#D49BA2' }}
+          style={{ backgroundColor: 'var(--primary-color)' }}
         />
       </div>
     </div>

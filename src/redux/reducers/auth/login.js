@@ -7,11 +7,9 @@ const formFieldValueMapLogin = {
 
 const getInitialStateFromLocalStorage = () => {
   const isLoggedIn = localStorage.getItem('isLoggedIn')
-  const isVerify = localStorage.getItem('isVerify')
   const userRole = localStorage.getItem('role')
   return {
     isLoggedIn: isLoggedIn === 'true' ? true : false,
-    isVerify: isVerify === 'true' ? true : false,
     userRole: userRole ? userRole : '',
     formFieldValueMapLogin,
     error: '',
@@ -53,7 +51,6 @@ const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoggedIn: false,
-        isVerify: false,
         isLoading: false,
       }
     case LOGIN.ERROR: {

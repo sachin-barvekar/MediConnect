@@ -4,16 +4,15 @@ import { ROUTE_PATH } from '../constant/urlConstant'
 import Header from '../common/Header'
 import Footer from '../common/Footer'
 import LoginScreen from '../containers/loginScreen'
-import RegisterScreen from '../containers/registerScreen'
 import { useSelector } from 'react-redux'
 import { USER_ROLE } from '../constant/role/index'
+import GMapScreen from '../containers/gMapScreen'
+import HomeScreen from '../containers/homScreen'
 
-import { isVerify, userRole } from '../redux/selectors/auth/index'
 
 const Routing = () => {
-  const verified = useSelector(isVerify)
-  const role = useSelector(userRole)
-
+  const role = localStorage.getItem('role')
+  const verified = localStorage.getItem('isLogin')
   if (role === USER_ROLE.FARMER && verified) {
     return (
       <React.Fragment>
@@ -63,8 +62,9 @@ const Routing = () => {
       </header>
       <main>
         <Routes>
+        <Route path={ROUTE_PATH.BASE.HOME} element={<HomeScreen />} />
+        <Route path={ROUTE_PATH.BASE.NEARBYHOSPITAL} element={<GMapScreen />} />
           <Route path={ROUTE_PATH.BASE.LOGIN} element={<LoginScreen />} />
-          <Route path={ROUTE_PATH.BASE.REGISTER} element={<RegisterScreen />} />
           <Route path='*' element={<Navigate to={ROUTE_PATH.BASE.HOME} />} />
         </Routes>
       </main>

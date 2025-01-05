@@ -1,16 +1,13 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import { ProgressBar } from 'primereact/progressbar'
 import LoginComponent from '../../components/login'
-import { init_login, login, logout } from '../../redux/action/auth/login'
-import { init_verification } from '../../redux/action/auth/smg91'
-
-import {
-  sendVerificationCode,
-  verifyCode,
-  reSendVerificationCode,
-} from '../../redux/action/auth/smg91'
+import { init_login, login } from '../../redux/action/auth/login'
 import { toast } from 'react-toastify'
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { auth, provider } from '../../config/firebase'
+import { useNavigate } from 'react-router-dom'
+
 const LoginScreen = props => {
   const {
     initLoginScreen,
@@ -20,21 +17,8 @@ const LoginScreen = props => {
     isLoginSuccess,
     isLoginError,
     error,
-    error1,
     login,
-    isLoggedIn,
-    logout,
-    verifyCode,
-    sendVerificationCode,
-    reSendVerificationCode,
-    isVerify,
-    isVerifyCodeError,
-    isSendVerificationCodeError,
-    isResendVerificationCodeSuccess,
-    isResendVerificationCodeError,
     init_login,
-    init_verification,
-    sendVerificationCodeSuccess,
   } = props
 
   useEffect(() => {
@@ -42,47 +26,42 @@ const LoginScreen = props => {
     // eslint-disable-next-line
   }, [])
 
+  const navigate = useNavigate()
+  const [loading, setLoading] = useState(false)
+  const handleGoogleLogin = async () => {
+    setLoading(true)
+    try {
+      const result = await signInWithPopup(auth, provider)
+      const credential = GoogleAuthProvider.credentialFromResult(result)
+      const token = credential.accessToken
+      const user = result.user
+      localStorage.setItem('token', JSON.stringify(token))
+      localStorage.setItem('user', JSON.stringify(user))
+      localStorage.setItem('isLoggedIn', true)
+      toast.success(`Welcome ${user.displayName}`)
+      navigate('/')
+    } catch (error) {
+      console.error('Google login error:', error)
+      toast.error('Google login failed. Please try again.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const loginProps = {
     formFieldValueMap,
     isPageLevelError,
     isLoginSuccess,
     isLoading,
     login,
-    sendVerificationCode,
-    verifyCode,
-    isLoggedIn,
-    logout,
-    isVerify,
-    reSendVerificationCode,
-    sendVerificationCodeSuccess,
-    isResendVerificationCodeSuccess,
+    loading,
+    handleGoogleLogin,
   }
 
   if (isLoginError) {
     const toastTitle = error ? error?.error : 'Error while login'
     toast.error(toastTitle)
     init_login()
-  }
-  if (isSendVerificationCodeError) {
-    const toastTitle = error ? error?.error : 'Send OTP Error'
-    toast.error(toastTitle)
-    init_verification()
-  }
-  if (isResendVerificationCodeSuccess) {
-    toast.success('OTP Resend Successfully')
-    init_verification()
-  }
-  if (isResendVerificationCodeError) {
-    const toastTitle = error1 ? error?.error : 'Resend OTP Error'
-    toast.error(toastTitle)
-    init_verification()
-  }
-  if (isVerifyCodeError) {
-    const toastTitle = error1
-      ? error1?.message?.message
-      : 'OTP Validating Error'
-    toast.error(toastTitle)
-    init_verification()
   }
 
   const renderProgressBar = () => {
@@ -101,13 +80,7 @@ const mapDispatchToProps = dispatch => {
   return {
     initLoginScreen: () => dispatch(init_login()),
     login: loginData => dispatch(login(loginData)),
-    sendVerificationCode: payload => dispatch(sendVerificationCode(payload)),
-    verifyCode: payload => dispatch(verifyCode(payload)),
-    logout: () => dispatch(logout()),
-    reSendVerificationCode: payload =>
-      dispatch(reSendVerificationCode(payload)),
     init_login: () => dispatch(init_login()),
-    init_verification: () => dispatch(init_verification()),
   }
 }
 
@@ -121,17 +94,6 @@ const mapStateToProps = (state, ownProps) => {
     isLoginError: state.loginReducer.isLoginError,
     error: state.loginReducer.error,
     isLoggedIn: state.loginReducer?.isLoggedIn,
-    sendVerificationCodeSuccess:
-      state.msg91Reducer?.sendVerificationCodeSuccess,
-    isResendVerificationCodeSuccess:
-      state.msg91Reducer?.isResendVerificationCodeSuccess,
-    isSendVerificationCodeError:
-      state.msg91Reducer?.isSendVerificationCodeError,
-    isVerify: state.msg91Reducer.isVerify,
-    isResendVerificationCodeError:
-      state.msg91Reducer?.isResendVerificationCodeError,
-    isVerifyCodeError: state.msg91Reducer?.isVerifyCodeError,
-    error1: state.msg91Reducer?.error,
   }
 }
 
