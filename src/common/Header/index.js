@@ -5,11 +5,12 @@ import { ROUTE_PATH } from '../../constant/urlConstant'
 import { Sidebar } from 'primereact/sidebar'
 import { Avatar } from 'primereact/avatar'
 import { Button } from 'primereact/button'
+import { toast } from 'react-toastify'
 import './index.css'
 
 const Header = () => {
   const navigate = useNavigate()
-  // const role = localStorage.getItem('role')
+  const role = localStorage.getItem('role')
   const verified = localStorage.getItem('isLoggedIn')
   const [visible, setVisible] = useState(false)
   const user = JSON.parse(localStorage.getItem('user'))
@@ -19,18 +20,26 @@ const Header = () => {
     setVisible(false)
   }
 
-  // const handleLogout = () => {
-  //   dispatch(logout())
-  //   navigate(ROUTE_PATH.BASE.HOME)
-  //   toast.success('Logout Successfully')
-  // }
+  const handleLogout = () => {
+    localStorage.clear()
+    navigate(ROUTE_PATH.BASE.HOME)
+    toast.success('Logout Successfully')
+  }
   const sidebarItems = [
     { label: 'Home', icon: 'pi pi-fw pi-home', route: ROUTE_PATH.BASE.HOME },
-    {
-      label: 'Nearby Hospitals',
-      icon: 'pi pi-fw pi-info-circle',
-      route: ROUTE_PATH.BASE.NEARBYHOSPITAL,
-    },
+    verified &&
+      role === 'patient' && {
+        label: 'Nearby Hospitals',
+        icon: 'pi pi-fw pi-map-marker',
+        route: ROUTE_PATH.BASE.NEARBYHOSPITAL,
+      },
+      verified &&
+      role === 'patient' && {
+        label: 'Appointment Shedule',
+        icon: 'pi pi-fw pi-calendar-clock',
+        // route: ROUTE_PATH.BASE.NEARBYHOSPITAL,
+      },
+
     !verified && {
       label: 'Login',
       icon: 'pi pi-fw pi-user',
@@ -45,7 +54,7 @@ const Header = () => {
     verified && {
       label: 'Logout',
       icon: 'pi pi-fw pi-power-off p-error',
-      // command: handleLogout,
+      command: handleLogout,
     },
   ].filter(Boolean)
 
@@ -64,13 +73,24 @@ const Header = () => {
         className='text-white no-outline font-bold rounded'
         onClick={() => navigate(ROUTE_PATH.BASE.HOME)}
       />
-      <Button
-        label={'Nearby Hospitals'}
-        icon='pi pi-info-circle'
-        text
-        className='text-white no-outline font-bold rounded'
-        onClick={() => navigate(ROUTE_PATH.BASE.NEARBYHOSPITAL)}
-      />
+      {verified && role === 'patient' && (
+        <Button
+          label={'Nearby Hospitals'}
+          icon='pi pi-map-marker'
+          text
+          className='text-white no-outline font-bold rounded'
+          onClick={() => navigate(ROUTE_PATH.BASE.NEARBYHOSPITAL)}
+        />
+      )}
+        {verified && role === 'patient' && (
+        <Button
+          label={'Appointment Shedule'}
+          icon='pi pi-calendar-clock'
+          text
+          className='text-white no-outline font-bold rounded'
+          // onClick={() => navigate(ROUTE_PATH.BASE.NEARBYHOSPITAL)}
+        />
+      )}
       {!verified && (
         <Button
           label={'Login'}
@@ -87,7 +107,7 @@ const Header = () => {
             icon='pi pi-power-off'
             text
             className='text-white no-outline font-bold  rounded'
-            // onClick={handleLogout}
+            onClick={handleLogout}
           />
         </>
       )}

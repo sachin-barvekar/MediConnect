@@ -12,7 +12,13 @@ import RegisteredDoctors from '../../components/home/meetDoctors'
 import { useNavigate } from 'react-router-dom'
 
 const HomeScreen = () => {
+  const isLoggedIn = localStorage.getItem('isLoggedIn')
+  const role = localStorage.getItem('role')
   const navigate = useNavigate()
+  const handleNavigation = () => {
+    const route = isLoggedIn ? (role === 'patient' ? '/nearby-hospital' : role === 'doctor' ? '/view' : '/') : '/login';
+    navigate(route);
+  };
   const slides = [
     {
       id: 1,
@@ -106,7 +112,7 @@ const HomeScreen = () => {
           <Button
             label='Get Started'
             className='p-button-lg p-button-rounded'
-            onClick={() => navigate('/login')}
+            onClick={handleNavigation}
           />
         </div>
         <SliderComponent slides={slides} />

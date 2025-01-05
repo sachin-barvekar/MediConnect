@@ -20,7 +20,9 @@ const LoginComponent = props => {
 
   const onSubmit = data => {
     login(data)
-    handleGoogleLogin()
+    handleGoogleLogin().then(() => {
+      localStorage.setItem('role', data.Role)
+    })
   }
 
   const getFormErrorMessage = name =>
