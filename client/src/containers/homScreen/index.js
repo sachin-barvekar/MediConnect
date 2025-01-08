@@ -93,7 +93,7 @@ const HomeScreen = () => {
       image:
         'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHVSER0_GUksH9iq399jMq9lGre4-3PFGJa1HpK3OZz5zWSaFMdKdVKW4_NkAUwyxlPOs&usqp=CAU',
       description:
-        'Pediatrician specializing in child health and growth monitoring.',
+        'Pediatrician specializing in child health.',
     },
   ]
   return (

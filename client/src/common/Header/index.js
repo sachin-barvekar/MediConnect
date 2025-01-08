@@ -15,6 +15,7 @@ const Header = () => {
   const [visible, setVisible] = useState(false)
   const user = JSON.parse(localStorage.getItem('user'))
   const userName = user?.displayName ?? ' '
+  const profilePic = user?.photoURL
   const handleNavigation = route => {
     navigate(route)
     setVisible(false)
@@ -168,6 +169,7 @@ const Header = () => {
                 <NavLink className='flex align-items-center no-underline'>
                   <Avatar
                     icon='pi pi-user'
+                    image={profilePic}
                     style={{
                       backgroundColor: 'var(--primary-color)',
                       color: '#ffffff',

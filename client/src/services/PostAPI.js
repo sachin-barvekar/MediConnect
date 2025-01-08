@@ -1,4 +1,4 @@
-export const baseUrl = 'http://localhost:4000'
+const baseUrl = process.env.REACT_APP_API_URL
 
 export function loadingShow(hidden) {
   let loading = document.getElementById('loading')

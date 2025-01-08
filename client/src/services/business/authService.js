@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {  handleAPIError } from '../common/errorHandler'
-import { baseUrl } from '../PostAPI'
 
+const baseUrl = process.env.REACT_APP_API_URL
 export const login = async payload => {
   const url = `${baseUrl}/auth/signin`
   try {

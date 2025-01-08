@@ -38,7 +38,7 @@ const Footer = () => {
       <div className='w-full md:px-8 footer-back bg-primary'>
         <div className='w-full md:p-4 px-3'>
           <div className='w-full md:col-4 mb-2 p-1 text-center'>
-            <div className='font-bold text-red-600 '>About Us</div>
+            <h3 className='font-bold text-red-600'>About Us</h3>
             <p className='text-white'>
               At MediConnect, we simplify healthcare by connecting patients with
               doctors and hospitals through secure health record storage,
