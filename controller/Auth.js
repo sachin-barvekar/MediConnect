@@ -1,4 +1,7 @@
 const User = require('../models/User')
+const jwt = require("jsonwebtoken")
+const User = require("../models/User")
+require("dotenv").config();
 
 exports.login = async (req, res) => {
   try {
@@ -19,7 +22,7 @@ exports.login = async (req, res) => {
 
     if (user) {
       // Check if role matches
-      if (user.role !== role) {
+      if (user.role == role) {
         return res.status(403).json({
           success: false,
           message: `You are already registered with the role '${user.role}'. Please log in with the correct role.`,
@@ -41,11 +44,36 @@ exports.login = async (req, res) => {
       profileImg, // Save the profile image
     });
 
-    return res.status(201).json({
+    // create payload
+    const payload = {
+      email: newUser.email,
+      role: newUser.role,
+      id: newUser._id,
+    }
+
+    // Create Token
+    const token = jwt.sign(
+      payload,
+      process.env.JWT_SECRET,
+      {expiresIn: "24h"}
+    );
+
+    // save token to user in database
+    newUser.token = token;
+
+    // Create options to pass in cookie
+    const options = {
+      expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+      httpOnly: true,
+    }
+
+    // Create cookie and send response
+    res.cookie("token", token, options).status(200).json({
       success: true,
-      user: newUser,
-      message: "User registered and logged in successfully",
-    });
+      newUser,
+      token,
+      message: "User logged in and registerd successfully",
+    })
   } catch (error) {
     console.error("Error during login", error);
     return res.status(500).json({
