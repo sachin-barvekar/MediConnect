@@ -3,7 +3,7 @@ import {  handleAPIError } from '../common/errorHandler'
 
 const baseUrl = process.env.REACT_APP_API_URL
 export const login = async payload => {
-  const url = `${baseUrl}/auth/signin`
+  const url = `${baseUrl}/login`
   try {
     const result = await axios.post(url, payload)
     if (result.status !== 200) {

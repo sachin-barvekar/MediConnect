@@ -4,14 +4,15 @@ exports.login = async (req, res) => {
   try {
     // Step 1: Get email, name, role, and profileImg from the request body
     const { email, name, role, profileImg } = req.body;
+    console.log(req.body)
 
     // Step 2: Validate input fields
-    if (!email || !name || !role) {
-      return res.status(400).json({
-        success: false,
-        message: "Please provide all required fields: email, name, role, and profileImg",
-      });
-    }
+    // if (!email || !name || !role) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "Please provide all required fields: email, name, role, and profileImg",
+    //   });
+    // }
 
     // Step 3: Check if the user already exists in the database
     let user = await User.findOne({ email });

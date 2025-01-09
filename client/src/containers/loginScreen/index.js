@@ -31,22 +31,42 @@ const LoginScreen = props => {
   const handleGoogleLogin = async () => {
     setLoading(true)
     try {
+      // Step 1: Attempt to sign in with Google
       const result = await signInWithPopup(auth, provider)
-      const credential = GoogleAuthProvider.credentialFromResult(result)
-      const token = credential.accessToken
       const user = result.user
-      localStorage.setItem('token', JSON.stringify(token))
-      localStorage.setItem('user', JSON.stringify(user))
-      localStorage.setItem('isLoggedIn', true)
-      toast.success(`Welcome ${user.displayName}`)
-      navigate('/')
+  
+      // Step 2: Prepare the login payload
+      const loginData = {
+        email: user.email,
+        name: user.displayName,
+        role: 'patient', // or 'doctor' based on your use case
+        profileImg: user.photoURL,
+      }
+  
+      // Step 3: Call the login API only if sign-in was successful
+      const response = await login(loginData)
+      console.log(response)
+      // Step 4: Handle response from the login API
+      if (response.success) {
+        localStorage.setItem('user', JSON.stringify(response.user))
+        localStorage.setItem('isLoggedIn', true)
+        toast.success(`Welcome ${response.user.name}`)
+        navigate('/')
+      } else {
+        toast.error(response.message || 'Login failed. Please try again.')
+      }
     } catch (error) {
-      console.error('Google login error:', error)
-      toast.error('Google login failed. Please try again.')
+      if (error.code === 'auth/popup-closed-by-user') {
+        toast.error('Sign-in process was canceled. Please try again.')
+      } else {
+        console.error('Google login error:', error)
+        toast.error('Google login failed. Please try again.')
+      }
     } finally {
       setLoading(false)
     }
   }
+  
 
   const loginProps = {
     formFieldValueMap,

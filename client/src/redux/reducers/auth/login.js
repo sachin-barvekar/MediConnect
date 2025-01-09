@@ -1,8 +1,7 @@
 import { INIT_LOGIN, LOGIN, LOGOUT } from '../../../constant/actionTypes/auth'
 
 const formFieldValueMapLogin = {
-  username: '',
-  password: '',
+  role: '',
 }
 
 const getInitialStateFromLocalStorage = () => {

@@ -19,7 +19,6 @@ const LoginComponent = props => {
   })
 
   const onSubmit = data => {
-    login(data)
     handleGoogleLogin().then(() => {
       localStorage.setItem('role', data.Role)
     })
