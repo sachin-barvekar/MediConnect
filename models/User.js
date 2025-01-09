@@ -19,6 +19,17 @@ const userSchema = new mongoose.Schema({
     type: String, 
     required: false,
   },
+  appointments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Appointment",
+    }
+  ],
+  patientData: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "PatientDetails",
+    required: true,
+  }
 }, { timestamps: true });
 
 const User = mongoose.model('User', userSchema);
