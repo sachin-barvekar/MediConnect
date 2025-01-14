@@ -7,12 +7,13 @@ import LoginScreen from '../containers/loginScreen'
 import { USER_ROLE } from '../constant/role/index'
 import GMapScreen from '../containers/gMapScreen'
 import HomeScreen from '../containers/homScreen'
-
+import BookAppointmentScreen from '../containers/bookAppointmentScreen'
+import MyBookedAppointmentsScreen from '../containers/profile'
 
 const Routing = () => {
   const role = localStorage.getItem('role')
-  const verified = localStorage.getItem('isLogin')
-  if (role === USER_ROLE.FARMER && verified) {
+  const verified = localStorage.getItem('isLoggedIn')
+  if (role === USER_ROLE.PATIENT && verified) {
     return (
       <React.Fragment>
         <header>
@@ -20,9 +21,18 @@ const Routing = () => {
         </header>
         <main>
           <Routes>
+            <Route path={ROUTE_PATH.BASE.HOME} element={<HomeScreen />} />
             <Route
-              path='*'
-              element={<Navigate to={ROUTE_PATH.FARMER.HOME} />}
+              path={ROUTE_PATH.PATIENT.NEARBYHOSPITAL}
+              element={<GMapScreen />}
+            />
+            <Route
+              path={ROUTE_PATH.PATIENT.APPOINTMENT}
+              element={<BookAppointmentScreen />}
+            />
+               <Route
+              path={ROUTE_PATH.PATIENT.DATA}
+              element={<MyBookedAppointmentsScreen />}
             />
           </Routes>
         </main>
@@ -32,8 +42,7 @@ const Routing = () => {
     )
   }
 
-  // Customer Routes
-  if (role === USER_ROLE.CUSTOMER && verified) {
+  if (role === USER_ROLE.DOCTOR && verified) {
     return (
       <React.Fragment>
         <header>
@@ -41,10 +50,7 @@ const Routing = () => {
         </header>
         <main>
           <Routes>
-            <Route
-              path='*'
-              element={<Navigate to={ROUTE_PATH.CUSTOMER.HOME} />}
-            />
+            <Route path={ROUTE_PATH.BASE.HOME} element={<HomeScreen />} />
           </Routes>
         </main>
 
@@ -61,8 +67,7 @@ const Routing = () => {
       </header>
       <main>
         <Routes>
-        <Route path={ROUTE_PATH.BASE.HOME} element={<HomeScreen />} />
-        <Route path={ROUTE_PATH.BASE.NEARBYHOSPITAL} element={<GMapScreen />} />
+          <Route path={ROUTE_PATH.BASE.HOME} element={<HomeScreen />} />
           <Route path={ROUTE_PATH.BASE.LOGIN} element={<LoginScreen />} />
           <Route path='*' element={<Navigate to={ROUTE_PATH.BASE.HOME} />} />
         </Routes>

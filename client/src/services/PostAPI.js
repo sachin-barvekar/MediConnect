@@ -1,18 +1,18 @@
 const baseUrl = process.env.REACT_APP_API_URL
 
-export function loadingShow(hidden) {
-  let loading = document.getElementById('loading')
-  loading.style.display = hidden
-}
-export function loadingsShow(hidden) {
-  let loading = document.getElementById('loadings')
-  loading.style.display = hidden
-}
+// export function loadingShow(hidden) {
+//   let loading = document.getElementById('loading')
+//   loading.style.display = hidden
+// }
+// export function loadingsShow(hidden) {
+//   let loading = document.getElementById('loadings')
+//   loading.style.display = hidden
+// }
 
-export const postLogin = data => {
-  loadingShow('block')
-  loadingShow('none')
-}
+// export const postLogin = data => {
+//   loadingShow('block')
+//   loadingShow('none')
+// }
 
 export async function postApiWithoutReq(type) {
   try {
@@ -91,7 +91,7 @@ export function postApi(type, data, token) {
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
-      authorization: token,
+      // authorization: token,
     },
     method: 'POST',
     body: JSON.stringify(data),
@@ -99,17 +99,17 @@ export function postApi(type, data, token) {
     .then(response => {
       if (response.status === 401) {
         //   window.location.replace("/");
-        loadingShow('none')
+        // loadingShow('none')
       }
 
       return response
     })
     .then(responseJson => {
-      loadingShow('none')
+      // loadingShow('none')
       return responseJson.json()
     })
     .catch(error => {
-      loadingShow('none')
+      // loadingShow('none')
       throw error
     })
 }

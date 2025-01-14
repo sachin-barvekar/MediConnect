@@ -7,15 +7,18 @@ import { Avatar } from 'primereact/avatar'
 import { Button } from 'primereact/button'
 import { toast } from 'react-toastify'
 import './index.css'
+import { useDispatch } from 'react-redux'
+import { init_login } from '../../redux/action/auth/login'
 
 const Header = () => {
+  const dispatch = useDispatch()
   const navigate = useNavigate()
   const role = localStorage.getItem('role')
   const verified = localStorage.getItem('isLoggedIn')
   const [visible, setVisible] = useState(false)
   const user = JSON.parse(localStorage.getItem('user'))
-  const userName = user?.displayName ?? ' '
-  const profilePic = user?.photoURL
+  const userName = user?.name ?? ' '
+  const profilePic = user?.profileImg
   const handleNavigation = route => {
     navigate(route)
     setVisible(false)
@@ -23,6 +26,7 @@ const Header = () => {
 
   const handleLogout = () => {
     localStorage.clear()
+    dispatch(init_login())
     navigate(ROUTE_PATH.BASE.HOME)
     toast.success('Logout Successfully')
   }
@@ -32,13 +36,19 @@ const Header = () => {
       role === 'patient' && {
         label: 'Nearby Hospitals',
         icon: 'pi pi-fw pi-map-marker',
-        route: ROUTE_PATH.BASE.NEARBYHOSPITAL,
+        route: ROUTE_PATH.PATIENT.NEARBYHOSPITAL,
       },
-      verified &&
+    verified &&
       role === 'patient' && {
         label: 'Appointment Shedule',
         icon: 'pi pi-fw pi-calendar-clock',
-        // route: ROUTE_PATH.BASE.NEARBYHOSPITAL,
+        route: ROUTE_PATH.PATIENT.APPOINTMENT,
+      },
+      verified &&
+      role === 'patient' && {
+        label: 'Profile',
+        icon: 'pi pi-user',
+        route: ROUTE_PATH.PATIENT.DATA,
       },
 
     !verified && {
@@ -47,14 +57,9 @@ const Header = () => {
       route: ROUTE_PATH.BASE.LOGIN,
       visible: !verified,
     },
-    {
-      label: 'Settings',
-      icon: 'pi pi-fw pi-cog',
-      route: ROUTE_PATH.BASE.HOME,
-    },
     verified && {
       label: 'Logout',
-      icon: 'pi pi-fw pi-power-off p-error',
+      icon: 'pi pi-power-off p-error',
       command: handleLogout,
     },
   ].filter(Boolean)
@@ -80,16 +85,25 @@ const Header = () => {
           icon='pi pi-map-marker'
           text
           className='text-white no-outline font-bold rounded'
-          onClick={() => navigate(ROUTE_PATH.BASE.NEARBYHOSPITAL)}
+          onClick={() => navigate(ROUTE_PATH.PATIENT.NEARBYHOSPITAL)}
         />
       )}
-        {verified && role === 'patient' && (
+      {verified && role === 'patient' && (
         <Button
           label={'Appointment Shedule'}
           icon='pi pi-calendar-clock'
           text
           className='text-white no-outline font-bold rounded'
-          // onClick={() => navigate(ROUTE_PATH.BASE.NEARBYHOSPITAL)}
+          onClick={() => navigate(ROUTE_PATH.PATIENT.APPOINTMENT)}
+        />
+      )}
+         {verified && role === 'patient' && (
+        <Button
+          label={'Profile'}
+          icon='pi pi-user'
+          text
+          className='text-white no-outline font-bold rounded'
+          onClick={() => navigate(ROUTE_PATH.PATIENT.DATA)}
         />
       )}
       {!verified && (
@@ -117,7 +131,7 @@ const Header = () => {
   return (
     <div className='border-bottom-1 border-400'>
       <div className='flex align-items-center justify-content-between p-1 block md:hidden bg-primary'>
-        <h6 className='pl-2 text-white logo'>MediConnect</h6>
+        <h5 className='pl-2 mt-2 text-white logo'>MediConnect</h5>
         <Button
           icon='pi pi-bars'
           className='p-button-text text-white'
@@ -133,7 +147,7 @@ const Header = () => {
         header={
           <div className='flex align-items-center justify-content-between p-1 block md:hidden'>
             <NavLink className='p-ripple no-underline'>
-              <span className='font-bold text-black logo'>MediConnect</span>
+              <span className='font-bold text-black text-lg logo'>MediConnect</span>
             </NavLink>
           </div>
         }

@@ -1,27 +1,50 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
+import { useNavigate } from 'react-router-dom'
 import { Button } from 'primereact/button'
 import MzAutoComplete from '../../common/MzForm/MzAutoComplete'
 import { FORM_FIELDS_NAME } from './constant'
 import { LOGINREGISTERBG } from '../../assets/images'
+import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { auth, provider } from '../../config/firebase'
+import { toast } from 'react-toastify'
 
 const LoginComponent = props => {
-  const { formFieldValueMap, login, loading, handleGoogleLogin } =
-    props.loginProps
+  const { formFieldValueMap, isLoading, login } = props.loginProps
+  const navigate = useNavigate()
   const {
     control,
     formState: { errors },
-    handleSubmit,
+    handleSubmit
   } = useForm({
-    defaultValues: { ...formFieldValueMap },
+    defaultValues: useMemo(() => {
+      return formFieldValueMap
+    }, [formFieldValueMap]),
     mode: 'onChange',
     reValidateMode: 'onChange',
   })
 
-  const onSubmit = data => {
-    handleGoogleLogin().then(() => {
-      localStorage.setItem('role', data.Role)
-    })
+  const onSubmit = async data => {
+    try {
+      // Step 1: Attempt to sign in with Google
+      const result = await signInWithPopup(auth, provider)
+      const user = result.user
+      // Step 2: Prepare the login payload
+      const loginData = {
+        email: user.email,
+        name: user.displayName,
+        role: data.role,
+        profileImg: user.photoURL,
+      }
+      await login(loginData)
+    } catch (error) {
+      if (error.code === 'auth/popup-closed-by-user') {
+        toast.error('Sign-in process was canceled. Please try again.')
+      } else {
+        console.error('Google login error:', error)
+        toast.error('Google login failed. Please try again.')
+      }
+    } 
   }
 
   const getFormErrorMessage = name =>
@@ -79,7 +102,7 @@ const LoginComponent = props => {
                     label='Login with Google'
                     icon='pi pi-google'
                     className='mt-3 border-round-sm'
-                    loading={loading}
+                    loading={isLoading}
                   />
                 </form>
               </div>

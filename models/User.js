@@ -18,17 +18,6 @@ const userSchema = new mongoose.Schema({
   profileImg: {
     type: String, 
     required: false,
-  },
-  appointments: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Appointment",
-    }
-  ],
-  patientData: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "PatientDetails",
-    required: true,
   }
 }, { timestamps: true });
 

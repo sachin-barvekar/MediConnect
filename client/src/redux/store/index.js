@@ -3,7 +3,8 @@ import rootReducer from '../reducers/rootReducers'
 import 'react-toastify/dist/ReactToastify.css'
 
 const logger = store => next => action => {
-  console.group(action.type)
+  console.log(action)
+  console.log(store.getState())
   return next(action)
 }
 

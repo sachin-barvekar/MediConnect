@@ -1,5 +1,4 @@
 export const USER_ROLE = {
-  ADMIN: 'admin',
-  CUSTOMER: 'customer',
-  FARMER: 'producer',
+  DOCTOR: 'doctor',
+  PATIENT: 'patient'
 }

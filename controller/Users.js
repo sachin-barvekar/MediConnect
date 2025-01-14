@@ -1,19 +1,27 @@
 const User = require('../models/User');
 
-exports.getProfile = async (req, res) => {
+exports.getAllDoctors = async (req, res) => {
   try {
-    if (!req.user) {
-      return res.status(401).json({ message: 'Unauthorized' });
+
+    // Find all users with the role of 'doctor'
+    const doctors = await User.find({ role: 'doctor' });
+
+    // Check if any doctors are found
+    if (doctors.length === 0) {
+      return res.status(404).json({ message: 'No doctors found' });
     }
 
-    const user = await User.findOne({ email: req.user.email });
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.json({ imageUrl:user.image, name: user.name, email: user.email, mobile: user.mobile, role: user.role, postalCode:user.postalCode });
+    // Return the list of doctors with selected fields
+    return res.status(200).json({
+      success: true,
+      doctors: doctors.map(doctor => ({
+        id: doctor._id,
+        name: doctor.name,
+        email: doctor.email
+      }))
+    });
   } catch (error) {
-    console.error('Error fetching user profile:', error);
-    res.status(500).json({ message: 'Failed to fetch user profile', error: error.message });
+    console.error('Error fetching doctors:', error);
+    res.status(500).json({ message: 'Failed to fetch doctors', error: error.message });
   }
 };

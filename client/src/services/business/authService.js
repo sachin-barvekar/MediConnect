@@ -12,6 +12,6 @@ export const login = async payload => {
     return result.data
   } catch (error) {
     console.error(error)
-    return handleAPIError(error?.response?.data?.message)
+    return handleAPIError(error?.response?.data)
   }
 }

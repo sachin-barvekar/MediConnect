@@ -1,0 +1,28 @@
+.chatbot-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+  }
+  
+  .chat-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .chatbot-window {
+    width: 300px;
+    height: 400px;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    position: fixed;
+    bottom: 90px;
+    right: 20px;
+    z-index: 1001;
+  }
+  
+  .chatbot-messages {
+    flex: 1;
+  }
+  

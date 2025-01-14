@@ -4,7 +4,8 @@ import './index.css';
 import App from './App';
 // import "primereact/resources/themes/bootstrap4-light-purple/theme.css"
 // import "primereact/resources/themes/lara-light-blue/theme.css"
-import "primereact/resources/themes/md-light-indigo/theme.css"
+// import "primereact/resources/themes/md-light-indigo/theme.css"
+import "primereact/resources/themes/tailwind-light/theme.css"
 import "primereact/resources/primereact.min.css";
 import "primeicons/primeicons.css";
 import "primeflex/primeflex.css"
