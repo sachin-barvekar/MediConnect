@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Card } from 'primereact/card'
 import { Button } from 'primereact/button'
 import { TabView, TabPanel } from 'primereact/tabview'
@@ -6,8 +6,12 @@ import { Avatar } from 'primereact/avatar'
 import { Panel } from 'primereact/panel'
 import { PROFILE } from '../../assets/images'
 import RegisteredDoctors from './meetDoctors/index'
+import DocumentUploader from './documents'
+import PatientFormModal from './editProfile'
 
 const MyAppointmentsList = () => {
+  const [dialogVisible, setDialogVisible] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
   const user = JSON.parse(localStorage.getItem('user'))
   const userName = user?.name ?? ' '
   const profilePic = user?.profileImg
@@ -79,7 +83,9 @@ const MyAppointmentsList = () => {
       description: 'Pediatrician specializing in child health.',
     },
   ]
-
+  const handleHideModal = () => {
+    setModalVisible(false)
+  }
   return (
     <div>
       <div className='grid grid-nogutter surface-0 text-800'>
@@ -100,8 +106,7 @@ const MyAppointmentsList = () => {
               background:
                 'linear-gradient(90deg, rgba(130, 177, 255, 0.6) 30%, rgba(39, 80, 183, 0.8) 70%)',
             }}
-            className='p-5'
-          >
+            className='p-5'>
             <section>
               <Panel
                 header={
@@ -124,10 +129,13 @@ const MyAppointmentsList = () => {
                     <Button
                       icon='pi pi-user-edit'
                       className='p-button-rounded p-button-secondary bg-blue-700'
+                      onClick={() => {
+                        setModalVisible(true)
+                      }
+                    }
                     />
                   </div>
-                }
-              >
+                }>
                 <div className='text-center'>
                   <p>
                     <strong>Age:</strong> {dummyPatientData.age} years
@@ -153,6 +161,9 @@ const MyAppointmentsList = () => {
                     label='Uploaded Document'
                     icon='pi pi-eye'
                     className='p-button-rounded bg-blue-700 mr-2'
+                    onClick={() => {
+                      setDialogVisible(true)
+                    }}
                   />
                 </div>
               </Panel>
@@ -163,6 +174,11 @@ const MyAppointmentsList = () => {
       <div className='col-12 px-4 py-5 text-center'>
         <RegisteredDoctors doctorsData={doctorsData} />
       </div>
+      <DocumentUploader
+        dialogVisible={dialogVisible}
+        setDialogVisible={setDialogVisible}
+      />
+      <PatientFormModal visible={modalVisible}  onHide={handleHideModal}/>
     </div>
   )
 }

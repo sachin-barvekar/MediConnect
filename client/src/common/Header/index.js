@@ -40,7 +40,7 @@ const Header = () => {
       },
     verified &&
       role === 'patient' && {
-        label: 'Appointment Shedule',
+        label: 'Doctors',
         icon: 'pi pi-fw pi-calendar-clock',
         route: ROUTE_PATH.PATIENT.APPOINTMENT,
       },
@@ -90,7 +90,7 @@ const Header = () => {
       )}
       {verified && role === 'patient' && (
         <Button
-          label={'Appointment Shedule'}
+          label={'Doctors'}
           icon='pi pi-calendar-clock'
           text
           className='text-white no-outline font-bold rounded'

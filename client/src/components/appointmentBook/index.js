@@ -127,7 +127,6 @@ const BookAppointmentComponent = props => {
                     rules={FORM_FIELDS_NAME.REASON.rules}
                     isError={!!errors[FORM_FIELDS_NAME.REASON.name]}
                     errorMsg={getFormErrorMessage(FORM_FIELDS_NAME.REASON.name)}
-                    
                   />
                   <Button
                     type='submit'
