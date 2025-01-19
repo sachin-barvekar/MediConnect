@@ -25,7 +25,6 @@ export const fetchDoctors = () => {
       dispatch(fetchDoctorsStart());
       try {
         const response = await doctorsService.fetchAllDoctors();
-        console.log(response)
         if (response) {
           dispatch(fetchDoctorsSuccess(response));
         } else {

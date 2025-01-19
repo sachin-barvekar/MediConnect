@@ -13,7 +13,7 @@ const MyAppointmentsList = () => {
   const user = JSON.parse(localStorage.getItem('user'))
   const userName = user?.name ?? ' '
   const profilePic = user?.profileImg
-  console.log(profilePic)
+  
   const dummyPatientData = {
     name: 'John Doe',
     age: 35,

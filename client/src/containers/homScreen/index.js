@@ -1,6 +1,8 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { Button } from 'primereact/button'
+import { connect } from 'react-redux'
 import SliderComponent from '../../components/home/slider'
+import { fetchDoctors } from '../../redux/action/doctors/doctors'
 import {
   MEDICONNECTSLIDE1,
   MEDICONNECTSLIDE2,
@@ -11,14 +13,29 @@ import WhyChooseUs from '../../components/home/card'
 import RegisteredDoctors from '../../components/home/meetDoctors'
 import { useNavigate } from 'react-router-dom'
 
-const HomeScreen = () => {
+const HomeScreen = props => {
+  const { doctors, fetchDoctors } = props
   const isLoggedIn = localStorage.getItem('isLoggedIn')
   const role = localStorage.getItem('role')
   const navigate = useNavigate()
   const handleNavigation = () => {
-    const route = isLoggedIn ? (role === 'patient' ? '/nearby-hospital' : role === 'doctor' ? '/view' : '/') : '/login';
-    navigate(route);
-  };
+    const route = isLoggedIn
+      ? role === 'patient'
+        ? '/nearby-hospital'
+        : role === 'doctor'
+        ? '/view'
+        : '/'
+      : '/login'
+    navigate(route)
+  }
+  useEffect(() => {
+    fetchDoctors()
+    // eslint-disable-next-line
+  }, [])
+
+  const doctorsProps = {
+    doctors
+  }
   const slides = [
     {
       id: 1,
@@ -72,36 +89,12 @@ const HomeScreen = () => {
         'Our support team is available round the clock to assist with your health concerns.',
     },
   ]
-  const doctorsData = [
-    {
-      name: 'Dr. John Doe',
-      specialty: 'Cardiologist',
-      image:
-        'https://ghealth121.com/wp-content/uploads/2021/03/Dr.-Pooja-Aggarwal.jpg',
-      description: 'Experienced Cardiologist with over 10 years of practice.',
-    },
-    {
-      name: 'Dr. Jane Smith',
-      specialty: 'Dermatologist',
-      image:
-        'https://www.asterhospitals.in/sites/default/files/2023-06/Dr.%20Roma%20Paul.jpeg',
-      description: 'Specialized in skin diseases and cosmetic dermatology.',
-    },
-    {
-      name: 'Dr. Michael Johnson',
-      specialty: 'Pediatrician',
-      image:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHVSER0_GUksH9iq399jMq9lGre4-3PFGJa1HpK3OZz5zWSaFMdKdVKW4_NkAUwyxlPOs&usqp=CAU',
-      description:
-        'Pediatrician specializing in child health.',
-    },
-  ]
+
   return (
     <div>
       <section
         className='hero-section surface-0 text-900 flex flex-column align-items-center justify-content-center'
-        id='hero'
-      >
+        id='hero'>
         <div className='text-center m-6'>
           <h1 className='text-6xl font-bold mb-2 text-primary'>
             Welcome to MediConnect
@@ -131,10 +124,27 @@ const HomeScreen = () => {
       </section>
 
       <section className='registered-doctors-section text-center p-1 mt-4 mb-2 mb-10 md:p-4'>
-        <RegisteredDoctors doctorsData={doctorsData} />
+        <RegisteredDoctors doctorsProps={doctorsProps} />
       </section>
     </div>
   )
 }
 
-export default HomeScreen
+const mapDispatchToProps = dispatch => {
+  return {
+    fetchDoctors: () => dispatch(fetchDoctors())
+  }
+}
+const mapStateToProps = (state, ownProps) => {
+  return {
+    ...ownProps,
+    doctors: state.doctorsReducer?.doctors || [],
+    isPageLevelError: state.doctorsReducer?.isPageLevelError,
+    isLoading: state.doctorsReducer?.isLoading,
+    isFetchSuccess: state.doctorsReducer?.isFetchSuccess,
+    isFetchError: state.doctorsReducer?.isFetchError,
+    error: state.doctorsReducer?.error,
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen)

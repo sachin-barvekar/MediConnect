@@ -3,9 +3,7 @@ const router = express.Router()
 
 const { login } = require('../controller/Auth')
 const {
-  auth,
-  isCommunityOrganization,
-  isCommunityBusinessOrOrganization,
+  auth
 } = require('../middleware/auth')
 const { Signout } = require('../controller/Signout')
 
@@ -16,15 +14,17 @@ const {
 
 const {
   addPatientData,
-  editPatientData,
-  deletePatientData,
+  editPatientData
 } = require('../controller/PatientDetails')
 const { getAllDoctors } = require('../controller/Users')
+const {addDoctorDetails } = require('../controller/DoctorDetails')
 
 //routes mapping
 //Profile page routes
 router.post('/login', login)
 router.get('/doctors', getAllDoctors)
+
+router.post('/doctor-profile',addDoctorDetails)
 
 // Appointment Scheduling routes
 router.post('/appointment/book', bookAppointment)

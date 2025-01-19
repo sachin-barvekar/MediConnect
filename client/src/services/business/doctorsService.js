@@ -4,7 +4,6 @@ import {  handleAPIError } from '../common/errorHandler'
 
 export const fetchAllDoctors = async (payload) => {
   const url = `${API_PATH.BASE.FETCH_ALL_DOCTORS}`;
-  console.log(url)
   try {
     let result = await getApi(url, payload);
     console.log(result)

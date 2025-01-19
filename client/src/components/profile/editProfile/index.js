@@ -18,8 +18,7 @@ const PatientFormModal = ({ visible, onHide, onSave, initialData }) => {
   })
   
   const onSubmit = async data => {
-    // Handle form submission here
-    console.log(data)
+
   }
 
   const getFormErrorMessage = name => {

@@ -1,30 +1,45 @@
-import React,{useEffect} from 'react'
+import React, { useEffect } from 'react'
 import { Carousel } from 'primereact/carousel'
 import { Card } from 'primereact/card'
+import { Button } from 'primereact/button'
 import AOS from 'aos'
 
-export default function RegisteredDoctors({ doctorsData }) {
-    useEffect(() => {
-        AOS.init({ duration: 1000 })
-      }, [])
-      
-  const doctorTemplate = (doctor) => {
+export default function RegisteredDoctors(props) {
+  const { doctors } = props.doctorsProps
+  useEffect(() => {
+    AOS.init({ duration: 1000 })
+  }, [])
+
+  const doctorTemplate = doctor => {
     return (
-      <div className="p-card p-shadow-2 m-2" data-aos="fade-up">
+      <div className='p-card p-shadow-2 m-2' data-aos='fade-up'>
         <Card
-          title={doctor.name}
-          subTitle={doctor.specialty}
+          key={doctor.id}
+          className='shadow-2 p-4 pb-1'
           header={
             <img
-              src={doctor.image}
+              src={doctor?.additionalDetails?.profileImg}
               alt={doctor.name}
-              className="w-full border-round"
-              style={{ height: '400px', objectFit: 'cover' }}
+              height={250}
+              className='w-full h-8 object-cover rounded-t-lg'
             />
-          }
-          className="p-mb-3 h-45rem"
-        >
-          <p>{doctor.description}</p>
+          }>
+          <div className='text-center'>
+            <h3 className='text-lg font-bold mb-2'>{doctor.name}</h3>
+            <p className='mb-1 text-gray-500'>
+              {doctor?.additionalDetails?.specialization}
+            </p>
+            <p className='mb-2 text-gray-400'>
+              {doctor?.additionalDetails?.hospitalName}
+            </p>
+            <p className='mb-2 text-gray-400'>
+              {doctor?.additionalDetails?.address?.streetName +
+                ', ' +
+                doctor?.additionalDetails?.address?.city +
+                ', ' +
+                doctor?.additionalDetails?.address?.state}
+            </p>
+          </div>
         </Card>
       </div>
     )
@@ -32,9 +47,11 @@ export default function RegisteredDoctors({ doctorsData }) {
 
   return (
     <div>
-      <h2 className="text-4xl font-semibold text-900 mb-4">Meet Our Registered Doctors</h2>
+      <h2 className='text-4xl font-semibold text-900 mb-4'>
+        Meet Our Registered Doctors
+      </h2>
       <Carousel
-        value={doctorsData}
+        value={doctors}
         itemTemplate={doctorTemplate}
         numVisible={3}
         circular
