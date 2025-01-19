@@ -14,10 +14,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     enum: ['patient', 'doctor'],
-  },
-  profileImg: {
-    type: String, 
-    required: false,
   }
 }, { timestamps: true });
 

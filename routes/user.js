@@ -3,9 +3,7 @@ const router = express.Router()
 
 const { login } = require('../controller/Auth')
 const {
-  auth,
-  isCommunityOrganization,
-  isCommunityBusinessOrOrganization,
+  auth
 } = require('../middleware/auth')
 const { Signout } = require('../controller/Signout')
 
@@ -15,30 +13,27 @@ const {
 } = require('../controller/Appointment')
 
 const {
-    addDoctorDetails,
-    updatedDoctorDetails,
-    fetchDoctorDetails,
-} = require("../controller/DoctorDetails");
-
-const { addPatientData, editPatientData } = require("../controller/PatientDetails");
+  addPatientData,
+  editPatientData
+} = require('../controller/PatientDetails')
+const { getAllDoctors } = require('../controller/Users')
+const {addDoctorDetails } = require('../controller/DoctorDetails')
 
 //routes mapping
 //Profile page routes
 router.post('/login', login)
 router.get('/doctors', getAllDoctors)
 
+router.post('/doctor-profile',addDoctorDetails)
+
 // Appointment Scheduling routes
 router.post('/appointment/book', bookAppointment)
 
 // patiend data routes
-router.post("/user/patientData/", auth, addPatientData);
-router.put("/user/editPatientData", auth, editPatientData);
+router.post('/user/patientData/', auth, addPatientData)
+router.put('/user/editPatientData', auth, editPatientData)
+// router.delete("/user/deletePatientData", auth, deletePatientData);
 
-router.post('/signout', Signout);
-
-// Doctor Details Route
-router.post("/user/add-doctor-data", auth, addDoctorDetails);
-router.put("/user/edit-doctor-data", auth, updatedDoctorDetails),
-router.get("/user/fetch-doctor-data", auth, fetchDoctorDetails);
+router.post('/signout', Signout)
 
 module.exports = router

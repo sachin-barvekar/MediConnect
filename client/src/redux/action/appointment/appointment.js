@@ -40,7 +40,6 @@ export const scheduleAppointmentError = error => ({
       dispatch(scheduleAppointmentStart());
       try {
         const response = await appointmentService.bookAppointment(appointmentData);
-        console.log(response)
         if (response?.success) {
           dispatch(scheduleAppointmentSuccess(response));
         } else {

@@ -26,7 +26,6 @@ const BookAppointmentComponent = props => {
   const dat = new Date()
 
   const onSubmit = async data => {
-    console.log(data)
     const payload = {
       userId: userId ?? '',
       doctorId: doctor._id,

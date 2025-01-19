@@ -54,8 +54,8 @@ const DoctorsComponent = props => {
     const { state, city } = data
     const filtered = doctors.filter(
       doctor =>
-        (!state || doctor.state === state.label) &&
-        (!city || doctor.city === city.label)
+        doctor?.additionalDetails?.address?.state === state &&
+        doctor?.additionalDetails?.address?.city === city
     )
     setFilteredDoctors(filtered)
   }
@@ -110,33 +110,49 @@ const DoctorsComponent = props => {
         </div>
       </form>
       <div className='m-6'>
-        <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4'>
-          {filteredDoctors.map(doctor => (
-            <Card
-              key={doctor.id}
-              className='shadow-2 p-4'
-              header={
-                <img
-                  src={doctor.profileImg}
-                  alt={doctor.name}
-                  className='w-full h-48 object-cover rounded-t-lg'
-                />
-              }>
-              <div className='text-center'>
-                <h3 className='text-lg font-bold mb-2'>{doctor.name}</h3>
-                <p className='mb-1 text-gray-500'>{doctor.specialization}</p>
-                <p className='mb-4 text-gray-400'>
-                  {doctor.address || 'Address not available'}
-                </p>
-                <Button
-                  label='Schedule Appointment'
-                  className='p-button-primary w-full'
-                  onClick={() => handleScheduleAppointment(doctor)}
-                />
-              </div>
-            </Card>
-          ))}
-        </div>
+        {filteredDoctors.length === 0 ? (
+          <div className='text-center mt-4'>
+            <p>No Doctors Found</p>
+          </div>
+        ) : (
+          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4'>
+            {filteredDoctors.map(doctor => (
+              <Card
+                key={doctor.id}
+                className='shadow-2 p-4 pb-1'
+                header={
+                  <img
+                    src={doctor?.additionalDetails?.profileImg}
+                    alt={doctor.name}
+                    height={250}
+                    className='w-full h-8 object-cover rounded-t-lg'
+                  />
+                }>
+                <div className='text-center'>
+                  <h3 className='text-lg font-bold mb-2'>{doctor.name}</h3>
+                  <p className='mb-1 text-gray-500'>
+                    {doctor?.additionalDetails?.specialization}
+                  </p>
+                  <p className='mb-2 text-gray-400'>
+                    {doctor?.additionalDetails?.hospitalName}
+                  </p>
+                  <p className='mb-2 text-gray-400'>
+                    {doctor?.additionalDetails?.address?.streetName +
+                      ', ' +
+                      doctor?.additionalDetails?.address?.city +
+                      ', ' +
+                      doctor?.additionalDetails?.address?.state}
+                  </p>
+                  <Button
+                    label='Schedule Appointment'
+                    className='p-button-primary w-full'
+                    onClick={() => handleScheduleAppointment(doctor)}
+                  />
+                </div>
+              </Card>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   )
