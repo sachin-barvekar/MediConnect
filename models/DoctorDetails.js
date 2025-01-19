@@ -5,9 +5,13 @@ const doctorDetailsSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+  active:{
+    type: Boolean,
+    required:true
+  },
   profileImg: {
     type: String,
-    required: false,
+    required: true,
   },
   specialization: {
     type: String,

@@ -4,6 +4,7 @@ const initialState = {
   doctors: [],
   isLoadingDoctors: false,
   errorDoctors: '',
+  isError:false
 }
 
 const doctorsReducer = (state = initialState, action) => {
@@ -36,6 +37,7 @@ const doctorsReducer = (state = initialState, action) => {
         ...state,
         isLoadingDoctors: false,
         errorDoctors: action?.payload?.message,
+        isError:true
       }
 
     default:

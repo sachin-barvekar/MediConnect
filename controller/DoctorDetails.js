@@ -108,32 +108,37 @@ exports.updatedDoctorDetails = async (req, res) => {
 
 // Fetch Doctor Details
 exports.fetchDoctorDetails = async (req, res) => {
-    try {
-        const userId = req.user.id;
+  try {
+    console.log(req)
+    const {id} = req.params;
 
-        if(!userId) {
-            return res.status(400).json({
-                success: false,
-                message: "userId is not present"
-            })
-        }
-
-        const doctorDetails = await DoctorDetails.findOne({ userId: userId })
-            .populate({ path: "userId" }).exec();
-
-        if (doctorDetails) {
-            return res.status(200).json({
-                success: true,
-                doctorDetails: doctorDetails,
-                message: "Doctor details fetched successfully",
-            })
-        }
-    } catch (error) {
-        console.log(error);
-        return res.status(501).json({
-            success: false,
-            error: error.message,
-            message: "Error in fetching doctor details."
-        })
+    if (!id) {
+      return res.status(400).json({
+        success: false,
+        message: 'User ID is required.',
+      });
     }
-}
+
+    const doctorDetails = await DoctorDetails.findOne({ userId: id }).populate('userId').exec();
+
+    if (!doctorDetails) {
+      return res.status(404).json({
+        success: false,
+        message: 'Doctor details not found.',
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      data: doctorDetails,
+      message: 'Doctor details fetched successfully.',
+    });
+  } catch (error) {
+    console.error('Error fetching doctor details:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error in fetching doctor details.',
+      error: error.message,
+    });
+  }
+};

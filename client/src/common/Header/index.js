@@ -44,11 +44,17 @@ const Header = () => {
         icon: 'pi pi-fw pi-calendar-clock',
         route: ROUTE_PATH.PATIENT.DOCTOR,
       },
-      verified &&
+    verified &&
       role === 'patient' && {
         label: 'Profile',
         icon: 'pi pi-user',
         route: ROUTE_PATH.PATIENT.DATA,
+      },
+    verified &&
+      role === 'doctor' && {
+        label: 'Profile',
+        icon: 'pi pi-user',
+        route: ROUTE_PATH.DOCTOR.DATA,
       },
 
     !verified && {
@@ -97,13 +103,22 @@ const Header = () => {
           onClick={() => navigate(ROUTE_PATH.PATIENT.DOCTOR)}
         />
       )}
-         {verified && role === 'patient' && (
+      {verified && role === 'patient' && (
         <Button
           label={'Profile'}
           icon='pi pi-user'
           text
           className='text-white no-outline font-bold rounded'
           onClick={() => navigate(ROUTE_PATH.PATIENT.DATA)}
+        />
+      )}
+      {verified && role === 'doctor' && (
+        <Button
+          label={'Profile'}
+          icon='pi pi-user'
+          text
+          className='text-white no-outline font-bold rounded'
+          onClick={() => navigate(ROUTE_PATH.DOCTOR.DATA)}
         />
       )}
       {!verified && (
@@ -147,12 +162,13 @@ const Header = () => {
         header={
           <div className='flex align-items-center justify-content-between p-1 block md:hidden'>
             <NavLink className='p-ripple no-underline'>
-              <span className='font-bold text-black text-lg logo'>MediConnect</span>
+              <span className='font-bold text-black text-lg logo'>
+                MediConnect
+              </span>
             </NavLink>
           </div>
         }
-        modal
-      >
+        modal>
         <div className='p-sidebar-content flex flex-column justify-content-between'>
           <div className='sidebar-menu'>
             {sidebarItems.map(
@@ -165,12 +181,10 @@ const Header = () => {
                       item.command
                         ? item.command
                         : () => handleNavigation(item.route)
-                    }
-                  >
+                    }>
                     <i
                       className={item.icon}
-                      style={{ fontSize: '1.5rem', marginRight: '1rem' }}
-                    ></i>
+                      style={{ fontSize: '1.5rem', marginRight: '1rem' }}></i>
                     <span className='ml-1'>{item.label}</span>
                   </div>
                 )

@@ -16,3 +16,18 @@ export const fetchAllDoctors = async (payload) => {
     return handleAPIError(error);
   }
 };
+
+export const fetchDoctorsByUserId = async (userId) => {
+  const url = `${API_PATH.BASE.FETCH_DOCTORS_BY_USER_ID}/${userId}`; // Use userId in the URL
+  try {
+    const result = await getApi(url); // No payload, as userId is passed in the URL
+    console.log(result);
+    if (result?.error) {
+      throw new handleAPIError(result);
+    }
+    return result;
+  } catch (error) {
+    console.error('Error fetching doctors by userId:', error);
+    return handleAPIError(error);
+  }
+};

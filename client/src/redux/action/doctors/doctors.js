@@ -35,3 +35,18 @@ export const fetchDoctors = () => {
       }
     };
   };
+  export const fetchDoctorsById = (userId) => {
+    return async dispatch => {
+      dispatch(fetchDoctorsStart());
+      try {
+        const response = await doctorsService.fetchDoctorsByUserId(userId); // Call the service function for fetching by userId
+        if (response?.success) {
+          dispatch(fetchDoctorsSuccess(response));
+        } else {
+          dispatch(fetchDoctorsError(response));
+        }
+      } catch (error) {
+        dispatch(fetchDoctorsError(`An error occurred while fetching doctors for userId: ${userId}`));
+      }
+    };
+  };

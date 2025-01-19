@@ -2,30 +2,26 @@ const express = require('express')
 const router = express.Router()
 
 const { login } = require('../controller/Auth')
-const {
-  auth
-} = require('../middleware/auth')
+const { auth } = require('../middleware/auth')
 const { Signout } = require('../controller/Signout')
 
 // appointment controllers
-const {
-  bookAppointment
-} = require('../controller/Appointment')
+const { bookAppointment } = require('../controller/Appointment')
 
 const {
   addPatientData,
-  editPatientData
+  editPatientData,
 } = require('../controller/PatientDetails')
 const { getAllDoctors } = require('../controller/Users')
-const {addDoctorDetails } = require('../controller/DoctorDetails')
+const { addDoctorDetails, fetchDoctorDetails } = require('../controller/DoctorDetails')
 
 //routes mapping
 //Profile page routes
 router.post('/login', login)
 router.get('/doctors', getAllDoctors)
 
-router.post('/doctor-profile',addDoctorDetails)
-
+router.post('/doctor-profile', addDoctorDetails)
+router.get('/doctor-profile/:id', fetchDoctorDetails);
 // Appointment Scheduling routes
 router.post('/appointment/book', bookAppointment)
 
