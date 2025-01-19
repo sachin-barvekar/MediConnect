@@ -6,7 +6,7 @@ import { FORM_FIELDS_NAME } from './constant'
 import { LOGINREGISTERBG } from '../../assets/images'
 
 const LoginComponent = props => {
-  const { formFieldValueMap, login, loading, handleGoogleLogin } =
+  const { formFieldValueMap, loading, handleGoogleLogin } =
     props.loginProps
   const {
     control,

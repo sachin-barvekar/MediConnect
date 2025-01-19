@@ -4,7 +4,7 @@ import { ProgressBar } from 'primereact/progressbar'
 import LoginComponent from '../../components/login'
 import { init_login, login } from '../../redux/action/auth/login'
 import { toast } from 'react-toastify'
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { signInWithPopup } from 'firebase/auth'
 import { auth, provider } from '../../config/firebase'
 import { useNavigate } from 'react-router-dom'
 
