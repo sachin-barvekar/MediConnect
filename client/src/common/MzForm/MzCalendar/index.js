@@ -25,6 +25,7 @@ const MzCalendar = props => {
     errorMsg,
     minDate,
     disabledDays,
+    ...fields
   } = props
 
   const getLabelClassName = () => {
@@ -68,6 +69,7 @@ const MzCalendar = props => {
                 mask={showTime ? DATE_TIME_MASK : DATE_MASK}
                 showIcon={true}
                 hourFormat={hourFormat}
+                {...fields}
               />
             )
           }}

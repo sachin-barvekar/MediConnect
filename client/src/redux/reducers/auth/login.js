@@ -1,7 +1,8 @@
 import { INIT_LOGIN, LOGIN, LOGOUT } from '../../../constant/actionTypes/auth'
 
-const formFieldValueMapLogin = {
-  role: '',
+
+const formFieldValueMapLogin = payload => {
+  return payload.role ?? ''
 }
 
 const getInitialStateFromLocalStorage = () => {
@@ -10,64 +11,55 @@ const getInitialStateFromLocalStorage = () => {
   return {
     isLoggedIn: isLoggedIn === 'true' ? true : false,
     userRole: userRole ? userRole : '',
-    formFieldValueMapLogin,
+    formFieldValueMapLogin: formFieldValueMapLogin({ role: userRole }),
     error: '',
     isLoading: false,
     isPageLevelError: false,
     isLoadingPage: false,
-    isLoginSuccess: false,
     isLoginError: false,
     isLogoutSuccess: false,
-    LogoutError: false,
     isLogoutError: false,
   }
 }
 
 const initialState = getInitialStateFromLocalStorage()
+
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
     case INIT_LOGIN:
       return {
         ...state,
-        isLoginSuccess: false,
         isLoginError: false,
+        error: '',
         isLoading: false,
+        isLoggedIn: false,
       }
+
     case LOGIN.START:
-    case LOGOUT.START:
       return {
         ...state,
         isLoading: true,
+        error: '',
       }
+
     case LOGIN.SUCCESS:
       return {
         ...state,
         isLoggedIn: true,
+        userRole: action.payload.role,
         isLoading: false,
+        error: '',
       }
 
-    case LOGOUT.SUCCESS:
+    case LOGIN.ERROR:
+      console.log('action.payload', action.payload)
       return {
         ...state,
-        isLoggedIn: false,
-        isLoading: false,
-      }
-    case LOGIN.ERROR: {
-      return {
-        ...state,
-        error: action?.payload,
+        error: action?.payload?.error?.message,
         isLoginError: true,
         isLoading: false,
       }
-    }
-    case LOGOUT.ERROR: {
-      return {
-        ...state,
-        error: action?.payload,
-        isLogoutError: true,
-        isLoading: false,
-      }
-    }
+
     default:
       return state
   }

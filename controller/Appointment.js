@@ -1,232 +1,86 @@
-const User = require("../models/User")
-const Appointment = require("../models/Appointment")
+const User = require("../models/User");
+const Appointment = require("../models/Appointment");
 
-// Booked appointment handler function
-exports.bookedAppointment = async (req, res) => {
-    // Get UserId
-    const patientId = req.user.id;
+// Book appointment handler function
+exports.bookAppointment = async (req, res) => {
+  try {
+    const { userId, doctorId, date, time, reason } = req.body;
 
-    // Fetch data
-    const {doctorId, date, time, status} = req.body;
-
-    // validate the data
-    if(!doctorId || !date || !time) {
-        return res.status(400).json({
-            success: false,
-            message: "All fields are required",
-        })
+    // Validate the data
+    if (!userId || !doctorId || !date || !time || !reason) {
+      return res.status(400).json({
+        success: false,
+        message: "All fields are required",
+      });
     }
 
-    // // check for the appointment status
-    // if(!status || status === undefined) {
-    //     status = "Create"
-    // }
-
-    // Check user is present or not
-    const patientDetails = await User.findById(patientId, {role: "patient"});
-
-    if(!patientDetails) {
-        return res.status(404).json({
-            success: false,
-            message: "User Details are not found",
-        })
+    // Check if the patient exists
+    const patientDetails = await User.findById(userId);
+    if (!patientDetails || patientDetails.role !== "patient") {
+      return res.status(404).json({
+        success: false,
+        message: "Patient not found",
+      });
     }
 
-    // check the doctor is present or not
-    const doctorDetails = await User.findById(doctorId, {role: "doctor"});
-
-    if(!doctorDetails) {
-        return res.status(404).json({
-            success: false,
-            message: "Doctor not found",
-        })
+    // Check if the doctor exists
+    const doctorDetails = await User.findById(doctorId);
+    if (!doctorDetails || doctorDetails.role !== "doctor") {
+      return res.status(404).json({
+        success: false,
+        message: "Doctor not found",
+      });
     }
 
-    // Create appointment entry database
+    // Check if the doctor is available at the given date and time
+    const existingAppointment = await Appointment.findOne({
+      doctor: doctorId,
+      date: date,
+      time: time,
+      status: "Booked",
+    });
+
+    if (existingAppointment) {
+      return res.status(409).json({
+        success: false,
+        message: "The doctor is not available at the selected date and time",
+      });
+    }
+
+    // Create a new appointment
     const newAppointment = await Appointment.create({
-        patient: patientDetails._id,
-        doctor: doctorDetails._id,
-        date: date,
-        time: time,
-        status: "Booked",
-    })
+      patient: userId,
+      doctor: doctorId,
+      date: date,
+      time: time,
+      reason: reason,
+      status: "Booked",
+    });
 
-    // Add new appointment to the patient Schema
+    // Add the appointment to the patient's record
     await User.findByIdAndUpdate(
-        {_id: patientId},
-        {
-            $push: {
-                appointments: newAppointment._id,
-            }
-        },
-        {new: true}
-    )
+      userId,
+      { $push: { appointments: newAppointment._id } },
+      { new: true }
+    );
 
-    // Add new appointment to the doctor schema
+    // Add the appointment to the doctor's record
     await User.findByIdAndUpdate(
-        {_id: doctorId},
-        {
-            $push: {
-                appointments: newAppointment._id,
-            }
-        },
-        {new: true}
-    )
+      doctorId,      
+      { $push: { appointments: newAppointment._id } },
+      { new: true }
+    );
 
-    return res.status(200).json({
-        success: true,
-        message: "Appointment Booked Successfully",
-        data: newAppointment,
-    })
-}
-
-// edit appointment
-exports.editAppointment = async(req, res) => {
-    try {
-        const { appointmentId } = req.body;
-
-        // fetch all the details present in the request body
-        const {date, time} = req.body;
-
-        const appointment = await Appointment.findById(appointmentId);
-        
-        if(!appointment) {
-            return res.status(402).json({
-                success: false,
-                error: "Appointment not found",
-            })
-        }
-
-        const updatedAppointment = await Appointment.findByIdAndUpdate(
-            {_id: appointmentId},
-            {
-                date: date,
-                time: time,
-            }
-        )
-            .populate("patient")
-            .populate("doctor")
-            .exec();
-
-        // return response
-        return res.status(200).json({
-            success: true,
-            message: "Appointment updated Successfully",
-            data: updatedAppointment,
-        })
-
-    } catch(error) {
-        res.status(401).json({
-            success: false,
-            message: "Error in edit appointment",
-        })
-    }
-}
-
-// getAllAppointments of the patient or doctor handler function
-exports.getAllAppointments = async(req, res) => {
-    try {
-        // fetch user id from req.user
-        const userDetails = req.user;
-
-        let appointments;
-
-        if(userDetails.role === "patient") {
-            appointments = await Appointment.find({
-                patient: userDetails._id,
-            }).sort({createdAt: -1})
-                .populate("patient")
-                .populate("doctor")
-                .exec();
-        } else {
-            appointments = await Appointment.find({
-                doctor: userDetails._id,
-            }).sort({createdAt: -1})
-                .populate("patient")
-                .populate("doctor")
-                .exec();
-        }
-
-        // return response
-        return res.status(200).json({
-            success: true,
-            message: "All the appointments are fetched successfully.",
-            data: appointments,
-        })
-    } catch(error) {
-        res.status(400).json({
-            success: false,
-            message: "Cannot fetched appointments data"
-        })
-    }
-}
-
-// Delete appointment
-exports.deleteAppointment = async(req, res) => {
-    try {
-        const { appointmentId } = req.body;
-
-        // find Appointment
-        const appointment = await Appointment.findById(appointmentId);
-
-        // validation
-        if(!appointment) {
-            return res.status(404).json({
-                success: false,
-                message: "Appointment not found",
-            })
-        }
-
-        const doctorId = appointment.doctor;
-        const patientId = appointment.patient;
-
-        // remove appointment from the doctor
-        await User.findByIdAndUpdate(
-            {_id: doctorId},
-            { 
-                $pull: {
-                    appointments: appointment._id,
-                }
-            },
-            {new: true}
-        )
-
-        // remove appointment from the patient
-        await User.findByIdAndUpdate(
-            {patientId},
-            {
-                $pull: {
-                    appointments: appointment._id,
-                }
-            },
-            {new: true}
-        )
-
-        // Delete the appointment
-        await Appointment.findByIdAndDelete(appointment._id)
-
-        // // Instead we can cancle the appointment
-        // await Appointment.findByIdAndUpdate(
-        //     {_id: appointment._id}, 
-        //     {status: "Cancelled"},
-        //     {new: true}
-        // )
-
-        // return res.status(200).json({
-        //     success: true,
-        //     message: "Appointment Cancelled Successfully.",
-        // })
-        
-        return res.status(200).json({
-            success: true,
-            message: "Appointment deleted Successfully",
-        })
-    } catch(error) {
-        console.log(error);
-        return res.status(500).json({
-            success: false,
-            message: "Server error",
-            error: error.message,
-        })
-    }
-}
+    return res.status(201).json({
+      success: true,
+      message: "Appointment booked successfully",
+      data: newAppointment,
+    });
+  } catch (error) {
+    console.error("Error booking appointment:", error);
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while booking the appointment",
+    });
+  }
+};

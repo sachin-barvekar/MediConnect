@@ -1,6 +1,6 @@
 export const FORM_FIELDS_NAME = {
   ROLE: {
-    name: 'Role',
+    name: 'role',
     label: 'Select Role',
     type: 'dropdown',
     optionLabel: 'name',

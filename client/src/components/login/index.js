@@ -1,27 +1,46 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button } from 'primereact/button'
 import MzAutoComplete from '../../common/MzForm/MzAutoComplete'
 import { FORM_FIELDS_NAME } from './constant'
 import { LOGINREGISTERBG } from '../../assets/images'
+import { signInWithPopup } from 'firebase/auth'
+import { auth, provider } from '../../config/firebase'
+import { toast } from 'react-toastify'
 
 const LoginComponent = props => {
-  const { formFieldValueMap, loading, handleGoogleLogin } =
-    props.loginProps
+  const { formFieldValueMap, isLoading, login } = props.loginProps
   const {
     control,
     formState: { errors },
     handleSubmit,
   } = useForm({
-    defaultValues: { ...formFieldValueMap },
+    defaultValues: useMemo(() => {
+      return formFieldValueMap
+    }, [formFieldValueMap]),
     mode: 'onChange',
     reValidateMode: 'onChange',
   })
 
-  const onSubmit = data => {
-    handleGoogleLogin().then(() => {
-      localStorage.setItem('role', data.Role)
-    })
+  const onSubmit = async data => {
+    try {
+      const result = await signInWithPopup(auth, provider)
+      const user = result.user
+      const loginData = {
+        email: user.email,
+        name: user.displayName,
+        role: data.role,
+        profileImg: user.photoURL,
+      }
+      await login(loginData)
+    } catch (error) {
+      if (error.code === 'auth/popup-closed-by-user') {
+        toast.error('Sign-in process was canceled. Please try again.')
+      } else {
+        console.error('Google login error:', error)
+        toast.error('Google login failed. Please try again.')
+      }
+    }
   }
 
   const getFormErrorMessage = name =>
@@ -47,20 +66,17 @@ const LoginComponent = props => {
                 padding: '1rem',
                 background:
                   'linear-gradient(90deg, rgba(130, 177, 255, 0.6) 30%, rgba(39, 80, 183, 0.8) 70%)',
-              }}
-            >
+              }}>
               <div
                 className='w-full text-center surface-card py-8 px-5 sm:px-8 flex flex-column align-items-center'
-                style={{ borderRadius: '53px' }}
-              >
+                style={{ borderRadius: '53px' }}>
                 <h1 className='text-900 font-bold text-xl md:text-1xl mb-2'>
                   Welcome to MediConnect
                 </h1>
                 <div className='text-600 mb-2'>Login with Google</div>
                 <form
                   className='mt-5 p-fluid w-full'
-                  onSubmit={handleSubmit(onSubmit)}
-                >
+                  onSubmit={handleSubmit(onSubmit)}>
                   <MzAutoComplete
                     control={control}
                     name={FORM_FIELDS_NAME.ROLE.name}
@@ -79,7 +95,7 @@ const LoginComponent = props => {
                     label='Login with Google'
                     icon='pi pi-google'
                     className='mt-3 border-round-sm'
-                    loading={loading}
+                    loading={isLoading}
                   />
                 </form>
               </div>

@@ -1,52 +1,47 @@
 import { INIT_LOGIN, LOGIN, LOGOUT } from '../../../constant/actionTypes/auth'
 import { authService } from '../../../services'
 
-export const init_login = () => {
-  return {
-    type: INIT_LOGIN,
-  }
-}
-export const loginStart = payload => {
-  return {
-    type: LOGIN.START,
-    payload,
-  }
-}
-export const loginSuccess = payload => {
-  return {
-    type: LOGIN.SUCCESS,
-    payload,
-  }
-}
-export const loginError = payload => {
-  return {
-    type: LOGIN.ERROR,
-    payload,
-  }
-}
+// Initialize login action
+export const init_login = () => ({
+  type: INIT_LOGIN,
+})
 
+// Start login action
+export const loginStart = () => ({
+  type: LOGIN.START,
+})
+
+// Handle successful login action
+export const loginSuccess = user => ({
+  type: LOGIN.SUCCESS,
+  payload: user,
+})
+
+// Handle login error action
+export const loginError = error => ({
+  type: LOGIN.ERROR,
+  payload: error,
+})
+
+// Login action (async)
 export const login = payload => {
-  return dispatch => {
+  return async dispatch => {
     dispatch(loginStart())
-    authService.login(payload)
+    try {
+      const response = await authService.login(payload)
+
+      if (response.success) {
+        dispatch(loginSuccess(response.user))
+        localStorage.setItem('user', JSON.stringify(response.user))
+        localStorage.setItem('role', response.user.role)
+        localStorage.setItem('isLoggedIn', true)
+      } else {
+        dispatch(loginError(response))
+      }
+    } catch (error) {
+      dispatch(loginError('An error occurred during login. Please try again.'))
+    }
   }
 }
 
-export const logoutStart = () => {
-  return {
-    type: LOGOUT.START,
-  }
-}
 
-export const logoutSuccess = () => {
-  return {
-    type: LOGOUT.SUCCESS,
-  }
-}
-
-export const logoutError = payload => {
-  return {
-    type: LOGOUT.ERROR,
-    payload,
-  }
-}
