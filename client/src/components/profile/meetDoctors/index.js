@@ -7,7 +7,6 @@ export default function RegisteredDoctors({ doctorsData }) {
     useEffect(() => {
         AOS.init({ duration: 1000 })
       }, [])
-  // Carousel item template using Card component
   const doctorTemplate = (doctor) => {
     return (
       <div className="p-card p-shadow-2 m-2" data-aos="fade-up">

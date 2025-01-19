@@ -1,20 +1,5 @@
-import { FETCH_DOCTORS, INIT_APPOINTMENT, SCHEDULE_APPOINTMENT } from '../../../constant/actionTypes/appointment/appointment';
+import {  INIT_APPOINTMENT, SCHEDULE_APPOINTMENT } from '../../../constant/actionTypes/appointment/appointment';
 import { appointmentService } from '../../../services';
-
-// Fetch doctors
-export const fetchDoctorsStart = () => ({
-  type: FETCH_DOCTORS.START,
-});
-
-export const fetchDoctorsSuccess = doctors => ({
-  type: FETCH_DOCTORS.SUCCESS,
-  payload: doctors,
-});
-
-export const fetchDoctorsError = error => ({
-  type: FETCH_DOCTORS.ERROR,
-  payload: error,
-});
 
 export const init_appointment = () => ({
   type: INIT_APPOINTMENT,
@@ -49,22 +34,6 @@ export const scheduleAppointmentError = error => ({
 //   payload: error,
 // });
 
-export const fetchDoctors = () => {
-    return async dispatch => {
-      dispatch(fetchDoctorsStart());
-      try {
-        const response = await appointmentService.fetchAllDoctors();
-        console.log(response)
-        if (response) {
-          dispatch(fetchDoctorsSuccess(response));
-        } else {
-          dispatch(fetchDoctorsError('Failed to fetch doctors.'));
-        }
-      } catch (error) {
-        dispatch(fetchDoctorsError('An error occurred while fetching doctors.'));
-      }
-    };
-  };
   
   export const scheduleAppointment = (appointmentData) => {
     return async dispatch => {

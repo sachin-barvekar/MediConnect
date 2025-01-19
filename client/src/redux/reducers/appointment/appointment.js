@@ -1,20 +1,16 @@
 import {
   INIT_APPOINTMENT,
-  FETCH_DOCTORS,
   SCHEDULE_APPOINTMENT,
 } from '../../../constant/actionTypes/appointment/appointment'
 
 const initialState = {
-  doctors: [],
-  isLoadingDoctors: false,
-  errorDoctors: '',
   scheduledAppointments: [],
   isCancelling: false,
   scheduledError: '',
   errorCancelling: '',
   isLoading: false,
   scheduledSuccess: false,
-  isError: false
+  isError: false,
 }
 
 const appointmentReducer = (state = initialState, action) => {
@@ -24,29 +20,7 @@ const appointmentReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         scheduledSuccess: false,
-        isError: false
-      }
-    case FETCH_DOCTORS.START:
-      return {
-        ...state,
-        isLoadingDoctors: true,
-        errorDoctors: '',
-      }
-
-    case FETCH_DOCTORS.SUCCESS:
-      return {
-        ...state,
-        isLoadingDoctors: false,
-        doctors: action.payload?.doctors,
-        errorDoctors: '',
-      }
-
-    case FETCH_DOCTORS.ERROR:
-      return {
-        ...state,
-        isLoadingDoctors: false,
-        errorDoctors:
-          action?.payload?.message,
+        isError: false,
       }
 
     case SCHEDULE_APPOINTMENT.START:
@@ -69,11 +43,10 @@ const appointmentReducer = (state = initialState, action) => {
         ...state,
         isLoading: false,
         isError: true,
-        scheduledError:
-          action?.payload?.message,
+        scheduledError: action?.payload?.message,
       }
 
-    // // Cancel an appointment
+    // Uncomment if cancel appointment logic is needed
     // case CANCEL_APPOINTMENT.START:
     //   return {
     //     ...state,

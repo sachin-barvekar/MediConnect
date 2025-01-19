@@ -9,6 +9,7 @@ import GMapScreen from '../containers/gMapScreen'
 import HomeScreen from '../containers/homScreen'
 import BookAppointmentScreen from '../containers/bookAppointmentScreen'
 import MyBookedAppointmentsScreen from '../containers/profile'
+import DoctorsScreen from '../containers/doctorsScreen'
 
 const Routing = () => {
   const role = localStorage.getItem('role')
@@ -25,6 +26,10 @@ const Routing = () => {
             <Route
               path={ROUTE_PATH.PATIENT.NEARBYHOSPITAL}
               element={<GMapScreen />}
+            />
+              <Route
+              path={ROUTE_PATH.PATIENT.DOCTOR}
+              element={<DoctorsScreen />}
             />
             <Route
               path={ROUTE_PATH.PATIENT.APPOINTMENT}

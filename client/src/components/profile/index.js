@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { Card } from 'primereact/card'
 import { Button } from 'primereact/button'
-import { TabView, TabPanel } from 'primereact/tabview'
 import { Avatar } from 'primereact/avatar'
 import { Panel } from 'primereact/panel'
 import { PROFILE } from '../../assets/images'
@@ -26,39 +24,6 @@ const MyAppointmentsList = () => {
     contact: '+1 123 456 7890',
     address: '123 Main Street, Springfield, USA',
   }
-
-  const dummyAppointments = [
-    {
-      doctorName: 'Dr. John Doe',
-      date: '2025-01-15',
-      time: '10:30 AM',
-      description: 'General check-up appointment with Dr. John.',
-    },
-    {
-      doctorName: 'Dr. Alice Smith',
-      date: '2025-01-18',
-      time: '2:00 PM',
-      description: 'Follow-up on lab results and prescription update.',
-    },
-  ]
-
-  const dummyPrescriptions = [
-    {
-      date: '2025-01-10',
-      doctorName: 'Dr. John Doe',
-      medicines: [
-        'Paracetamol 500mg - 2 times a day',
-        'Ibuprofen 200mg - 1 time a day',
-      ],
-      notes: 'Take medications after food and stay hydrated.',
-    },
-    {
-      date: '2025-01-18',
-      doctorName: 'Dr. Alice Smith',
-      medicines: ['Vitamin D 1000 IU - 1 time a day'],
-      notes: 'Continue regular exercise and follow up after two weeks.',
-    },
-  ]
 
   const doctorsData = [
     {

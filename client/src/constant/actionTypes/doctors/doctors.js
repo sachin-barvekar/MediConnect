@@ -1,0 +1,8 @@
+export const FETCH_DOCTORS = {
+    START: 'FETCH_DOCTORS_START',
+    SUCCESS: 'FETCH_DOCTORS_SUCCESS',
+    ERROR: 'FETCH_DOCTORS_ERROR',
+  }
+  
+  export const INIT_DOCTORS = 'INIT_DOCTORS'
+  

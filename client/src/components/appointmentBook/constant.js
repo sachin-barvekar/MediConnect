@@ -2,14 +2,9 @@ export const FORM_FIELDS_NAME = {
   DOCTOR: {
     name: 'doctor',
     label: 'Doctor',
-    type: 'dropdown',
-    optionLabel: 'name',
-    optionValue: 'id',
     rules: {
       required: 'Doctor is required',
-    },
-    options: [],
-    placeholder: 'Select a doctor',
+    }
   },
   DATE: {
     name: 'date',

@@ -6,18 +6,18 @@ import { DataTable } from 'primereact/datatable'
 import { Column } from 'primereact/column'
 
 const DocumentUploader = ({ dialogVisible, setDialogVisible }) => {
-  const [dialogData, setDialogData] = useState({
+  const [dialogData] = useState({
     title: 'Documents',
     message: '',
     severity: 'info',
   })
 
-  const [uploadedDocs, setUploadedDocs] = useState([]) // State to store uploaded documents
+  const [uploadedDocs, setUploadedDocs] = useState([]) 
 
   const handleUpload = event => {
     const newDocs = event.files.map(file => ({
       name: file.name,
-      url: `http://localhost:4000/uploads/${file.name}`, // Assume backend returns file URL
+      url: `http://localhost:4000/uploads/${file.name}`, 
     }))
 
     setUploadedDocs(prevDocs => [...prevDocs, ...newDocs])
@@ -64,7 +64,6 @@ const DocumentUploader = ({ dialogVisible, setDialogVisible }) => {
 
   return (
     <div className='document-uploader'>
-      {/* PrimeReact FileUpload Component */}
       <Dialog
         header={dialogData.title}
         visible={dialogVisible}
@@ -92,7 +91,6 @@ const DocumentUploader = ({ dialogVisible, setDialogVisible }) => {
           uploadLabel='Upload'
         />
         </div>
-        {/* Uploaded Documents List */}
       </Dialog>
     </div>
   )

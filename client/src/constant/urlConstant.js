@@ -5,7 +5,8 @@ export const ROUTE_PATH = {
   },
   PATIENT: {
     NEARBYHOSPITAL: '/nearby-hospital',
-    APPOINTMENT: '/appointment',
+    DOCTOR:'/doctors',
+    APPOINTMENT: '/doctors/appointment',
     DATA: '/profile'
   },
   DOCTOR: {

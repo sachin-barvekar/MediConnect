@@ -42,7 +42,7 @@ const Header = () => {
       role === 'patient' && {
         label: 'Doctors',
         icon: 'pi pi-fw pi-calendar-clock',
-        route: ROUTE_PATH.PATIENT.APPOINTMENT,
+        route: ROUTE_PATH.PATIENT.DOCTOR,
       },
       verified &&
       role === 'patient' && {
@@ -94,7 +94,7 @@ const Header = () => {
           icon='pi pi-calendar-clock'
           text
           className='text-white no-outline font-bold rounded'
-          onClick={() => navigate(ROUTE_PATH.PATIENT.APPOINTMENT)}
+          onClick={() => navigate(ROUTE_PATH.PATIENT.DOCTOR)}
         />
       )}
          {verified && role === 'patient' && (

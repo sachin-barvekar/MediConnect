@@ -1,6 +1,5 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Dialog } from 'primereact/dialog'
-import { InputText } from 'primereact/inputtext'
 import { Button } from 'primereact/button'
 import { useForm } from 'react-hook-form'
 import { FORM_FIELDS_NAME } from './constant'
