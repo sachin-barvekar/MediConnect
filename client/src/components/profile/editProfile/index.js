@@ -7,7 +7,7 @@ import MzInput from '../../../common/MzForm/MzInput'
 import MzAutoComplete from '../../../common/MzForm/MzAutoComplete'
 import MzPhoneInput from '../../../common/MzForm/MzPhoneInput'
 
-const PatientFormModal = ({ visible, onHide, onSave, initialData }) => {
+const PatientFormModal = ({ visible, onHide, initialData }) => {
   const {
     control,
     formState: { errors },

@@ -1,4 +1,4 @@
-import { INIT_LOGIN, LOGIN, LOGOUT } from '../../../constant/actionTypes/auth'
+import { INIT_LOGIN, LOGIN } from '../../../constant/actionTypes/auth'
 import { authService } from '../../../services'
 
 // Initialize login action

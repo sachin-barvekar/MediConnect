@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { Carousel } from 'primereact/carousel'
 import { Card } from 'primereact/card'
-import { Button } from 'primereact/button'
 import AOS from 'aos'
 
 export default function RegisteredDoctors(props) {
