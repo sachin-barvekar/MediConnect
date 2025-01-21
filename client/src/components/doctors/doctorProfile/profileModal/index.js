@@ -1,14 +1,21 @@
 import React, { useState, useEffect } from 'react'
 import { Dialog } from 'primereact/dialog'
 import { Button } from 'primereact/button'
-import { FileUpload } from 'primereact/fileupload' // Import FileUpload
+import { FileUpload } from 'primereact/fileupload'
 import { useForm } from 'react-hook-form'
 import { DOCTOR_PROFILE_FIELDS } from './constant'
 import MzInput from '../../../../common/MzForm/MzInput'
 import MzAutoComplete from '../../../../common/MzForm/MzAutoComplete'
 import MzPhoneInput from '../../../../common/MzForm/MzPhoneInput'
 
-const DoctorProfileFormModal = ({ visible, onHide, onSave, initialData }) => {
+const DoctorProfileFormModal = ({
+  visible,
+  onHide,
+  onSave,
+  initialData,
+  userId,
+  addDoctorDetails,
+}) => {
   const {
     control,
     formState: { errors },
@@ -35,7 +42,31 @@ const DoctorProfileFormModal = ({ visible, onHide, onSave, initialData }) => {
     }
   }, [selectedState, setValue])
   const onSubmit = async data => {
-    onSave(data)
+    console.log(data)
+    // Prepare the FormData object to send
+    const formData = new FormData()
+
+    const payload = {
+      specialization: data.specialization,
+      description: data.description,
+      contactNumber: data.contactNumber,
+      hospitalName: data.hospitalName,
+      streetName: data.streetName,
+      city: data.city,
+      state: data.state,
+      pinCode: data.pinCode,
+    }
+
+
+    // Call the API or action that sends the FormData along with the URL parameters
+    try {
+      await addDoctorDetails(payload, data.profileImg, userId)
+      // After successful submission, you can handle post-save actions (e.g., close modal)
+      onSave && onSave(data)
+      onHide() // Close the modal
+    } catch (error) {
+      console.error('Error submitting the form:', error)
+    }
   }
 
   const getFormErrorMessage = name => {
@@ -47,7 +78,6 @@ const DoctorProfileFormModal = ({ visible, onHide, onSave, initialData }) => {
   const isLoading = false
 
   const handleFileUpload = e => {
-    // Set the uploaded file value to the form
     const file = e.files[0]
     setValue(DOCTOR_PROFILE_FIELDS.PROFILE_IMAGE.name, file)
   }
@@ -57,7 +87,8 @@ const DoctorProfileFormModal = ({ visible, onHide, onSave, initialData }) => {
       header={`${initialData ? 'Edit' : 'Add'} Doctor Profile`}
       visible={visible}
       style={{ width: '500px' }}
-      onHide={onHide}>
+      onHide={onHide}
+    >
       <form onSubmit={handleSubmit(onSubmit)} className='p-fluid'>
         <FileUpload
           className='mb-2'
@@ -66,7 +97,7 @@ const DoctorProfileFormModal = ({ visible, onHide, onSave, initialData }) => {
           uploadHandler={handleFileUpload}
           chooseLabel='Choose Profile Image'
           accept='image/*'
-          maxFileSize={1000000} // Maximum file size, adjust if needed
+          maxFileSize={1000000}
           onSelect={handleFileUpload}
           auto
           showUploadButton={false}
@@ -159,7 +190,9 @@ const DoctorProfileFormModal = ({ visible, onHide, onSave, initialData }) => {
           disabled={!selectedStateWatcher}
           rules={DOCTOR_PROFILE_FIELDS.ADDRESS.CITY.rules}
           isError={!!errors[DOCTOR_PROFILE_FIELDS.ADDRESS.CITY.name]}
-          errorMsg={getFormErrorMessage(DOCTOR_PROFILE_FIELDS.ADDRESS.CITY.name)}
+          errorMsg={getFormErrorMessage(
+            DOCTOR_PROFILE_FIELDS.ADDRESS.CITY.name
+          )}
         />
         <MzInput
           control={control}

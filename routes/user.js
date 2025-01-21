@@ -20,7 +20,7 @@ const { addDoctorDetails, fetchDoctorDetails } = require('../controller/DoctorDe
 router.post('/login', login)
 router.get('/doctors', getAllDoctors)
 
-router.post('/doctor-profile', addDoctorDetails)
+router.post('/doctor-profile/:id', addDoctorDetails)
 router.get('/doctor-profile/:id', fetchDoctorDetails);
 // Appointment Scheduling routes
 router.post('/appointment/book', bookAppointment)

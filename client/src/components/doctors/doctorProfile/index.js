@@ -6,7 +6,7 @@ import { PROFILE } from '../../../assets/images'
 import DoctorProfileFormModal from './profileModal'
 
 const DoctorProfile = props => {
-  const { isError } = props.doctorProfileProps
+  const { isError, addDoctorDetails, userId } = props.doctorProfileProps
   console.log(isError)
   const [modalVisible, setModalVisible] = useState(false)
   const user = JSON.parse(localStorage.getItem('user'))
@@ -51,7 +51,8 @@ const DoctorProfile = props => {
               background:
                 'linear-gradient(90deg, rgba(130, 177, 255, 0.6) 30%, rgba(39, 80, 183, 0.8) 70%)',
             }}
-            className='p-5'>
+            className='p-5'
+          >
             <section>
               <Panel
                 header={
@@ -79,7 +80,8 @@ const DoctorProfile = props => {
                       }}
                     />
                   </div>
-                }>
+                }
+              >
                 <div className='text-center'>
                   <p>
                     <strong>Age:</strong> {dummyPatientData.age} years
@@ -113,7 +115,12 @@ const DoctorProfile = props => {
         setDialogVisible={setDialogVisible}
       />
       <PatientFormModal visible={modalVisible}  onHide={handleHideModal}/> */}
-      <DoctorProfileFormModal visible={modalVisible} onHide={handleHideModal} />
+      <DoctorProfileFormModal
+        visible={modalVisible}
+        onHide={handleHideModal}
+        userId={userId}
+        addDoctorDetails={addDoctorDetails}
+      />
     </div>
   )
 }

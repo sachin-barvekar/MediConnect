@@ -60,14 +60,18 @@ export const postApiWithoutReqAsyn = async type => {
     })
 }
 
-export function postApiFormData(type, data, token) {
+export function postApiFormData(type, image, data, token) {
+  console.log(data, image)
+  const formData = new FormData();
+
+  // Append the image file to FormData
+  formData.append('image', image);
+
+  // Append the other fields as JSON (stringified)
+  formData.append('data',data);
   return fetch(baseUrl + type, {
-    headers: {
-      'Content-Type': 'multipart/form-data',
-      authorization: token,
-    },
     method: 'POST',
-    body: data,
+    body: formData,
   })
     .then(response => {
       if (response.status === 401) {
