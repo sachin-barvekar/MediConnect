@@ -5,7 +5,7 @@ import DoctorProfile from '../../../components/doctors/doctorProfile'
 import { addDoctorDetails, fetchDoctorsById } from '../../../redux/action/doctors/doctors'
 
 const DoctorProfileScreen = props => {
-  const { isLoading, fetchDoctorDetails, isError, addDoctorDetails } = props
+  const { isLoading, fetchDoctorDetails, isError, addDoctorDetails,doctors } = props
   const user = JSON.parse(localStorage.getItem('user'))
   const userId = user._id
   useEffect(() => {
@@ -17,7 +17,8 @@ const DoctorProfileScreen = props => {
   const doctorProfileProps = {
     isError,
     addDoctorDetails,
-    userId
+    userId,
+    doctors
   }
   const renderProgressBar = () => {
     return <ProgressBar mode='indeterminate' style={{ height: '6px' }} />
@@ -39,10 +40,11 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = (state) => {
   return {
     isLoading: state.doctorsReducer.isLoading,
     isError: state.doctorsReducer.isError,
+    doctors: state.doctorsReducer?.doctors || [],
   }
 }
 

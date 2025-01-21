@@ -1,9 +1,13 @@
-const { uploadImageToCloudinary } = require('../utils/imageUploader') 
+const { uploadImageToCloudinary } = require('../utils/imageUploader')
 const DoctorDetails = require('../models/DoctorDetails')
 
 exports.addDoctorDetails = async (req, res) => {
   try {
     // Destructuring the data sent in the body
+    const jsonData = req.body.data
+
+    // Parse the JSON string to an object
+    const parsedData = JSON.parse(jsonData)
     const {
       specialization,
       description,
@@ -13,10 +17,10 @@ exports.addDoctorDetails = async (req, res) => {
       city,
       state,
       pinCode,
-    } = req.body
-
+      active
+    } = parsedData
     const { id: userId } = req.params
-    const profileImg = req.file
+    const profileImg = req.files.image
 
     // Validate if required fields are missing
     if (
@@ -50,6 +54,7 @@ exports.addDoctorDetails = async (req, res) => {
     // Create a new DoctorDetails document
     const doctorDetails = new DoctorDetails({
       userId,
+      active,
       profileImg: uploadedProfileImg, // Use the uploaded image URL
       specialization,
       description,

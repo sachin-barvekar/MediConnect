@@ -115,11 +115,11 @@ const DoctorsComponent = props => {
             <p>No Doctors Found</p>
           </div>
         ) : (
-          <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4'>
+          <div className='"flex-initial flex align-items-center justify-content-center font-bold flex-wrap px-5 py-3 gap-6 border-round'>
             {filteredDoctors.map(doctor => (
               <Card
                 key={doctor.id}
-                className='shadow-2 p-4 pb-1'
+                   className='shadow-2 p-4 pb-1 w-20rem'
                 header={
                   <img
                     src={doctor?.additionalDetails?.profileImg}

@@ -34,7 +34,7 @@ const doctorsReducer = (state = initialState, action) => {
       return {
         ...state,
         isLoadingDoctors: false,
-        doctors: action.payload?.doctors || [],
+        doctors: action.payload?.doctors || action.payload.data || [],
         errorDoctors: '',
       };
 

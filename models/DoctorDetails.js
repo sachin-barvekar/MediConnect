@@ -24,12 +24,6 @@ const doctorDetailsSchema = new mongoose.Schema({
   contactNumber: {
     type: Number,
     required: true,
-    validate: {
-      validator: function (v) {
-        return v.toString().length === 10 
-      },
-      message: 'No. must be 10 digits long',
-    },
   },
   hospitalName: {
     type: String,
@@ -53,7 +47,7 @@ const doctorDetailsSchema = new mongoose.Schema({
       required: true,
       validate: {
         validator: function (v) {
-          return v.toString().length === 6 // Ensure exactly 6 digits
+          return v.toString().length === 6
         },
         message: 'Pincode must be 6 digits long',
       },

@@ -42,10 +42,6 @@ const DoctorProfileFormModal = ({
     }
   }, [selectedState, setValue])
   const onSubmit = async data => {
-    console.log(data)
-    // Prepare the FormData object to send
-    const formData = new FormData()
-
     const payload = {
       specialization: data.specialization,
       description: data.description,
@@ -55,13 +51,11 @@ const DoctorProfileFormModal = ({
       city: data.city,
       state: data.state,
       pinCode: data.pinCode,
+      active: true,
     }
 
-
-    // Call the API or action that sends the FormData along with the URL parameters
     try {
       await addDoctorDetails(payload, data.profileImg, userId)
-      // After successful submission, you can handle post-save actions (e.g., close modal)
       onSave && onSave(data)
       onHide() // Close the modal
     } catch (error) {

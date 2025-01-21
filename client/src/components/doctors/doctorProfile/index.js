@@ -4,10 +4,12 @@ import { Avatar } from 'primereact/avatar'
 import { Panel } from 'primereact/panel'
 import { PROFILE } from '../../../assets/images'
 import DoctorProfileFormModal from './profileModal'
+import AppointmentCard from './appointmentCard'
 
 const DoctorProfile = props => {
-  const { isError, addDoctorDetails, userId } = props.doctorProfileProps
-  console.log(isError)
+  const { isError, addDoctorDetails, userId, doctors } =
+    props.doctorProfileProps
+  console.log(doctors)
   const [modalVisible, setModalVisible] = useState(false)
   const user = JSON.parse(localStorage.getItem('user'))
   const userName = user?.name ?? ' '
@@ -17,20 +19,36 @@ const DoctorProfile = props => {
       setModalVisible(true)
     }
   }, [isError])
-  const dummyPatientData = {
-    name: 'John Doe',
-    age: 35,
-    gender: 'Male',
-    height: '5ft 10in',
-    weight: '70kg',
-    bloodGroup: 'O+',
-    contact: '+1 123 456 7890',
-    address: '123 Main Street, Springfield, USA',
-  }
 
   const handleHideModal = () => {
     setModalVisible(false)
   }
+  const appointments = [
+    {
+      patientName: 'John Doe',
+      reason: 'Regular Checkup',
+      date: '2025-01-22',
+      time: '10:30 AM',
+      doctorName: 'Dr. Smith',
+      status: 'Confirmed',
+    },
+    {
+      patientName: 'Jane Smith',
+      reason: 'Follow-up',
+      date: '2025-01-23',
+      time: '2:00 PM',
+      doctorName: 'Dr. Brown',
+      status: 'Pending',
+    },
+    {
+      patientName: 'Michael Johnson',
+      reason: 'Consultation',
+      date: '2025-01-24',
+      time: '11:00 AM',
+      doctorName: 'Dr. Taylor',
+      status: 'Completed',
+    },
+  ]
   return (
     <div>
       <div className='grid grid-nogutter surface-0 text-800'>
@@ -61,14 +79,17 @@ const DoctorProfile = props => {
                       <Avatar
                         label={userName.charAt(0)}
                         icon={profilePic}
-                        image={profilePic}
+                        image={doctors?.profileImg}
                         size='xlarge'
                         shape='circle'
                         className='mr-3'
                       />
                       <div className='pt-3 text'>
                         <h3 className='text-900 font-bold'>{userName}</h3>
-                        <p className='text-600'>{dummyPatientData.address}</p>
+                        <p className='text-600'>
+                          {' '}
+                          {` ${doctors.address?.streetName}, ${doctors.address?.city}, ${doctors.address?.state}`}
+                        </p>
                       </div>
                     </div>
 
@@ -84,22 +105,16 @@ const DoctorProfile = props => {
               >
                 <div className='text-center'>
                   <p>
-                    <strong>Age:</strong> {dummyPatientData.age} years
+                    <strong>Hospital Name:</strong> {doctors?.hospitalName}
                   </p>
                   <p>
-                    <strong>Gender:</strong> {dummyPatientData.gender}
+                    <strong>Specialization:</strong> {doctors?.specialization}
                   </p>
                   <p>
-                    <strong>Height:</strong> {dummyPatientData.height}
+                    <strong>Description:</strong> {doctors?.description} years
                   </p>
                   <p>
-                    <strong>Weight:</strong> {dummyPatientData.weight}
-                  </p>
-                  <p>
-                    <strong>Blood Group:</strong> {dummyPatientData.bloodGroup}
-                  </p>
-                  <p>
-                    <strong>Contact:</strong> {dummyPatientData.contact}
+                    <strong>Contact No:</strong> {doctors?.contactNumber} years
                   </p>
                 </div>
               </Panel>
@@ -107,14 +122,10 @@ const DoctorProfile = props => {
           </div>
         </div>
       </div>
-      <div className='col-12 px-4 py-5 text-center'>
-        {/* <RegisteredDoctors doctorsData={doctorsData} /> */}
+      <div className='col-12 px-6 py-6 text-center'>
+        <h2>Appointments</h2>
+        <AppointmentCard appointments={appointments} />
       </div>
-      {/* <DocumentUploader
-        dialogVisible={dialogVisible}
-        setDialogVisible={setDialogVisible}
-      />
-      <PatientFormModal visible={modalVisible}  onHide={handleHideModal}/> */}
       <DoctorProfileFormModal
         visible={modalVisible}
         onHide={handleHideModal}

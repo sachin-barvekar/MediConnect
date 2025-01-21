@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { ProgressBar } from 'primereact/progressbar'
 import LoginComponent from '../../components/login'
@@ -76,8 +76,7 @@ const mapStateToProps = (state, ownProps) => {
     isLoginError: state.loginReducer.isLoginError,
     error: state.loginReducer.error,
     isLoggedIn: state.loginReducer?.isLoggedIn,
-    userRole: state.loginReducer?.userRole,
-    isLoggedIn:state.loginReducer?.isLoggedIn
+    userRole: state.loginReducer?.userRole
   }
 }
 
