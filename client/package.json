@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^13.5.0",
     "aos": "^2.3.4",
     "axios": "^1.7.2",
+    "backend": "file:..",
     "chart": "^0.1.2",
     "chart.js": "^4.4.7",
     "dayjs": "^1.11.13",
