@@ -34,7 +34,7 @@ app.use(fileUpload({
 app.use(express.json());
 app.use("/api/v1", userRoutes);
 // Use the client
-// app.use(express.static(path.join(__dirname,'/client/dist')));
+app.use(express.static(path.join(__dirname,'/client/dist')));
 
 app.listen(PORT, () => {
   console.log(`THE SERVER IS UP AND RUNNING AT PORT ${PORT}`);
