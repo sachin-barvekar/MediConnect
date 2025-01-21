@@ -10,6 +10,7 @@ import HomeScreen from '../containers/homScreen'
 import BookAppointmentScreen from '../containers/bookAppointmentScreen'
 import MyBookedAppointmentsScreen from '../containers/profile'
 import DoctorsScreen from '../containers/doctorsScreen'
+import DoctorProfileScreen from '../containers/doctorsScreen/doctorProfileScreen'
 
 const Routing = () => {
   const role = localStorage.getItem('role')
@@ -56,6 +57,10 @@ const Routing = () => {
         <main>
           <Routes>
             <Route path={ROUTE_PATH.BASE.HOME} element={<HomeScreen />} />
+            <Route
+              path={ROUTE_PATH.DOCTOR.DATA}
+              element={<DoctorProfileScreen/>}
+            />
           </Routes>
         </main>
 

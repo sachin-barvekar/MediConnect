@@ -6,3 +6,9 @@ export const FETCH_DOCTORS = {
   
   export const INIT_DOCTORS = 'INIT_DOCTORS'
   
+  export const ADD_DOCTOR_DETAILS = {
+    START: 'ADD_DOCTOR_DETAILS_START',
+    SUCCESS: 'ADD_DOCTOR_DETAILS_SUCCESS',
+    ERROR: 'ADD_DOCTOR_DETAILS_ERROR',
+  };
+  
