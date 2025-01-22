@@ -41,7 +41,8 @@ app.use(express.json());
 app.use("/api/v1", userRoutes);
 
 // Serve Static Files
-const clientPath = path.join(__dirname, "client", "dist");
+const clientPath = path.join(__dirname, "client", "build");
+
 app.use(express.static(clientPath));
 
 // Handle All Other Routes for SPA
