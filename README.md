@@ -10,25 +10,19 @@ MediConnect is a comprehensive healthcare platform designed to simplify and enha
 - **Appointment Scheduling**: Book appointments with doctors and specialists.
 - **Medication Reminders**: Get notified about medication schedules.
 - **Search for Doctors**: Locate doctors by specialization, location, or ratings.
+- **Prescription Management**: Create and share digital prescriptions.
 
 ### For Doctors:
 - **Patient Management**: View patient profiles and medical history.
 - **Appointment Tracking**: Manage and track appointments.
-- **Prescription Management**: Create and share digital prescriptions.
-
-### Additional Features:
-- **User Authentication**: Secure sign-up and login functionality.
-- **Dashboard**: Tailored dashboards for patients and doctors.
-- **Notifications**: Real-time updates for appointments and reminders.
-- **Integration with APIs**: Use third-party services for advanced features like geolocation and payment.
 
 ## Technologies Used
 
-- **Frontend**: React.js, Tailwind CSS
+- **Frontend**: React.js, PrimeReact, PrimeFlex CSS.
 - **Backend**: Node.js, Express.js
 - **Database**: MongoDB
 - **State Management**: Redux
-- **API Integration**: Integration with external APIs (e.g., for geolocation or notifications).
+- **API Integration**: Integration with external APIs (e.g., for geolocation and firebase).
 
 ## Installation
 
@@ -55,8 +49,7 @@ MediConnect is a comprehensive healthcare platform designed to simplify and enha
      ```env
      PORT=4000
      MONGO_URI=your_mongodb_connection_string
-     JWT_SECRET=your_jwt_secret
-     ```
+     
 5. Start the server:
    ```bash
    npm start
@@ -79,30 +72,6 @@ MediConnect is a comprehensive healthcare platform designed to simplify and enha
 1. Open your browser and go to `http://localhost:3000` for the frontend interface.
 2. Create a user account and log in.
 3. Explore the platform as a patient or a doctor.
-
-## Folder Structure
-```
-mediconnect/
-├── backend/                # Backend source code
-│   ├── controllers/      # Route handlers
-│   ├── models/           # Mongoose models
-│   ├── routes/           # API routes
-│   ├── utils/            # Utility functions
-│   └── server.js         # Entry point for backend
-├── client/                 # Frontend source code
-│   ├── public/          # Static files
-│   ├── src/             # React app source code
-│       ├── components/  # Reusable components
-│       ├── pages/       # Page components
-│       ├── redux/       # Redux store setup
-│       └── App.js      # Main application file
-├── .env                   # Environment variables
-├── package.json           # Backend dependencies
-├── README.md              # Documentation
-└── ...
-```
-
-## Contributing
 
 Contributions are welcome! Please follow these steps:
 1. Fork the repository.
@@ -128,5 +97,4 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 For any inquiries, please contact:
 - Name: Sachin Barvekar
-- Email: sachin.barvekar@example.com
-- Project Repository: [MediConnect](https://github.com/yourusername/mediconnect)
+- Email: sachinbarvekar2003@gmail.com
